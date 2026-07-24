@@ -67,5 +67,18 @@ main.content ul li::marker { color: var(--accent); }
 
 .note { color: var(--muted); font-size: 0.9rem; }
 
+/* Figures / diagrams */
+.figure { margin: 6px 0; border: 1px solid var(--line); border-radius: 10px; background: #0d1314; padding: 16px; }
+.figure svg { width: 100%; height: auto; display: block; }
+.figure figcaption { color: var(--muted); font-size: 0.8rem; margin-top: 12px; text-align: center; font-family: var(--mono); }
+
+/* Link lists */
+.linklist { list-style: none; padding: 0; margin: 0; }
+.linklist li { margin-bottom: 7px; padding-left: 16px; position: relative; }
+.linklist li::before { content: "→"; position: absolute; left: 0; color: var(--accent); }
+.linklist a { color: var(--accent); text-decoration: none; }
+.linklist a:hover { text-decoration: underline; }
+.linklist .desc { color: var(--muted); }
+
 footer { padding: 40px 0 60px; margin-top: 30px; color: var(--muted); font-size: 0.85rem; text-align: center; border-top: 1px solid var(--line); }
 footer a { color: var(--accent); text-decoration: none; }

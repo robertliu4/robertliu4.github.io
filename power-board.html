@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Thunderbots Power Board (v3.6) — Robert Liu</title>
-  <meta name="description" content="UBC Thunderbots power board (v3.6) — layout, thermal, and reliability work." />
+  <meta name="description" content="UBC Thunderbots power distribution board (v3.6) — regulation, INA226 I²C monitoring, flyback kicker charging, layout and thermal/reliability work." />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -19,13 +19,15 @@
     <div class="wrap">
       <span class="eyebrow">UBC Thunderbots · PCB</span>
       <h1>Power Board (v3.6)</h1>
-      <p class="lead">The robot's power board — I did much of the layout and am now improving its thermal and reliability performance.</p>
+      <p class="lead">The power-distribution board for UBC Thunderbots' autonomous soccer robots — I did much of the layout and am improving its thermal and reliability performance.</p>
       <p class="meta">
         <b>Role:</b> Layout · thermal &amp; reliability — v3.6 revision<br />
-        <b>Team:</b> UBC Thunderbots (RoboCup autonomous soccer robots)
+        <b>Team:</b> UBC Thunderbots (RoboCup Small Size League)<br />
+        <b>Tools:</b> Altium Designer
       </p>
       <div class="actions">
         <a class="primary" href="https://github.com/UBC-Thunderbots/PCB_Power/tree/Power-v3.6" target="_blank" rel="noopener">Code ↗</a>
+        <a href="https://github.com/UBC-Thunderbots/PCB_Power/blob/Power-v3.6/power-v3.6/pcb/power-v3.5_assembly.pdf" target="_blank" rel="noopener">Assembly drawing (PDF) ↗</a>
         <a href="https://www.youtube.com/@UBCThunderbots" target="_blank" rel="noopener">Team ↗</a>
       </div>
     </div>
@@ -34,15 +36,74 @@
   <main class="content wrap">
     <section>
       <h2>Overview</h2>
-      <p>The power board distributes and regulates power across the Thunderbots robot, feeding the compute, motors, and control electronics. Under sustained match load, a power board has to stay cool and stable — heat and marginal reliability are what take robots off the field.</p>
-      <p>I did a significant share of the board's layout, and I'm currently working on the <b>v3.6</b> revision.</p>
+      <p>UBC Thunderbots builds fully autonomous soccer robots for the RoboCup Small Size League. The power board takes the raw battery voltage and turns it into everything the robot needs: regulated logic and motor rails, current telemetry, and the high-voltage charging circuit that powers the robot's kicker and chipper. Under sustained match play it has to do all of that without overheating or dropping out — heat and marginal reliability are exactly what take a robot off the field.</p>
+      <p>I did a significant share of the board's layout and am now working the <b>v3.6</b> revision.</p>
     </section>
 
     <section>
-      <h2>What I did</h2>
+      <h2>Architecture</h2>
+      <figure class="figure">
+        <svg viewBox="0 0 700 330" role="img" aria-label="Power board architecture block diagram">
+          <defs>
+            <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+              <path d="M0,0 L7,3 L0,6 Z" fill="#5a6b67" />
+            </marker>
+          </defs>
+          <!-- subsystem 1 -->
+          <text x="16" y="20" fill="#45c7ab" font-family="monospace" font-size="12">POWER DISTRIBUTION</text>
+          <!-- boxes -->
+          <g font-family="-apple-system, Segoe UI, sans-serif" font-size="13" fill="#cdd9d6" text-anchor="middle">
+            <rect x="16"  y="34" width="130" height="46" rx="8" fill="#101617" stroke="#2b3a38"/>
+            <text x="81"  y="62">Battery ≈15 V</text>
+            <rect x="200" y="34" width="180" height="46" rx="8" fill="#101617" stroke="#2b3a38"/>
+            <text x="290" y="56">12 V / 5 V</text><text x="290" y="72" font-size="11" fill="#8b9a96">buck regulation</text>
+            <rect x="434" y="34" width="150" height="46" rx="8" fill="#101617" stroke="#2b3a38"/>
+            <text x="509" y="62">Rails → robot</text>
+            <rect x="404" y="108" width="240" height="42" rx="8" fill="#0e1618" stroke="#45c7ab"/>
+            <text x="524" y="134" fill="#8fe6d3">INA226 · I²C current monitor</text>
+          </g>
+          <!-- arrows row 1 -->
+          <line x1="146" y1="57" x2="196" y2="57" stroke="#5a6b67" stroke-width="1.5" marker-end="url(#ar)"/>
+          <line x1="380" y1="57" x2="430" y2="57" stroke="#5a6b67" stroke-width="1.5" marker-end="url(#ar)"/>
+          <line x1="524" y1="108" x2="524" y2="84" stroke="#5a6b67" stroke-width="1.5" marker-end="url(#ar)"/>
+
+          <!-- subsystem 2 -->
+          <text x="16" y="182" fill="#45c7ab" font-family="monospace" font-size="12">KICK / CHIP CHARGING</text>
+          <g font-family="-apple-system, Segoe UI, sans-serif" font-size="13" fill="#cdd9d6" text-anchor="middle">
+            <rect x="16"  y="196" width="150" height="46" rx="8" fill="#101617" stroke="#2b3a38"/>
+            <text x="91"  y="224">Flyback charger</text>
+            <rect x="210" y="196" width="150" height="46" rx="8" fill="#101617" stroke="#2b3a38"/>
+            <text x="285" y="218">HV capacitor</text><text x="285" y="234" font-size="11" fill="#8b9a96">bank</text>
+            <rect x="404" y="196" width="180" height="46" rx="8" fill="#101617" stroke="#2b3a38"/>
+            <text x="494" y="224">Kicker / chipper</text>
+            <rect x="210" y="268" width="230" height="42" rx="8" fill="#0e1618" stroke="#45c7ab"/>
+            <text x="325" y="294" fill="#8fe6d3">Auto-discharge + HV sense</text>
+          </g>
+          <!-- arrows subsystem 2 -->
+          <line x1="91"  y1="84"  x2="91"  y2="196" stroke="#5a6b67" stroke-width="1.5" marker-end="url(#ar)"/>
+          <line x1="166" y1="219" x2="210" y2="219" stroke="#5a6b67" stroke-width="1.5" marker-end="url(#ar)"/>
+          <line x1="360" y1="219" x2="404" y2="219" stroke="#5a6b67" stroke-width="1.5" marker-end="url(#ar)"/>
+          <line x1="325" y1="268" x2="325" y2="242" stroke="#5a6b67" stroke-width="1.5" marker-end="url(#ar)"/>
+        </svg>
+        <figcaption>Board architecture — original diagram, drawn from the v3.6 schematic sheets.</figcaption>
+      </figure>
+    </section>
+
+    <section>
+      <h2>What's on the board</h2>
       <ul>
-        <li>Completed a large portion of the board layout.</li>
-        <li>Currently diagnosing and resolving <b>overheating</b> hotspots and <b>reliability</b> issues to make the board robust under sustained load.</li>
+        <li><b>Regulation</b> — DC-DC buck converters step the battery down to the 12 V and 5 V rails (LM22677-based, designed against TI WEBENCH and validated in simulation).</li>
+        <li><b>Current &amp; power telemetry</b> — INA226 monitors read rail current and power over an <b>I²C</b> bus, so the robot can watch its own power draw.</li>
+        <li><b>Kick / chip charging</b> — a flyback converter charges a high-voltage capacitor bank that drives the kicker and chipper solenoids, with a dedicated HV-measurement path and an <b>auto-discharge</b> safety circuit.</li>
+        <li><b>Peripheral interfaces</b> — break-beam ball detection, the Geneva dribbler mechanism, and an MCU breakout, all brought out on the board.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>My work on v3.6</h2>
+      <ul>
+        <li>Completed a large portion of the multi-rail board layout in Altium.</li>
+        <li>Working the v3.6 revision to resolve <b>overheating</b> hotspots and <b>reliability</b> issues — improving thermal handling around the regulators and HV section and fixing signal-integrity problems (e.g., I²C trace routing) so the board holds up under sustained load.</li>
       </ul>
     </section>
 
@@ -50,9 +111,12 @@
       <h2>Tech</h2>
       <div class="tags">
         <span>PCB Layout</span>
-        <span>Power Electronics</span>
-        <span>Thermal</span>
         <span>Altium</span>
+        <span>Power Electronics</span>
+        <span>DC-DC (LM22677)</span>
+        <span>INA226 / I²C</span>
+        <span>Flyback / HV</span>
+        <span>Thermal</span>
       </div>
     </section>
   </main>

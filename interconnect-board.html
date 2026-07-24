@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thunderbots Interconnect Board (v1.4) — Robert Liu</title>
-  <meta name="description" content="UBC Thunderbots interconnect board (UI v1.4) — Raspberry Pi to robot signal hub." />
+  <title>Thunderbots Interconnect / UI Board (v1.4) — Robert Liu</title>
+  <meta name="description" content="UBC Thunderbots UI / interconnect board (v1.4) — breaks the onboard compute's interfaces out to the robot: radio over SPI, motor driver, filtered I/O, isolation." />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -18,11 +18,12 @@
   <header class="hero">
     <div class="wrap">
       <span class="eyebrow">UBC Thunderbots · PCB</span>
-      <h1>Interconnect Board (UI v1.4)</h1>
-      <p class="lead">The interconnect board that ties the Raspberry Pi to every signal around the robot.</p>
+      <h1>Interconnect / UI Board (v1.4)</h1>
+      <p class="lead">The board that ties the robot's onboard computer to every signal around it — radio, motors, sensors, switches, and display.</p>
       <p class="meta">
         <b>Role:</b> Board design — v1.4 revision<br />
-        <b>Team:</b> UBC Thunderbots (RoboCup autonomous soccer robots)
+        <b>Team:</b> UBC Thunderbots (RoboCup Small Size League)<br />
+        <b>Tools:</b> Altium Designer
       </p>
       <div class="actions">
         <a class="primary" href="https://github.com/UBC-Thunderbots/PCB_UI/tree/ui-v1.4" target="_blank" rel="noopener">Code ↗</a>
@@ -34,14 +35,71 @@
   <main class="content wrap">
     <section>
       <h2>Overview</h2>
-      <p>UBC Thunderbots builds fully autonomous soccer-playing robots for the RoboCup Small Size League. The interconnect board is the hub that routes signals between the robot's Raspberry Pi compute module and the subsystems around it — motors, sensors, and control electronics — so the high-level software can reach every part of the robot.</p>
-      <p>I worked on the <b>v1.4</b> revision of this board.</p>
+      <p>This is UBC Thunderbots' user-interface and interconnect PCB. It sits with the robot's onboard computer (a Jetson Nano) and breaks its interfaces out to the rest of the robot — the wireless radio, the motor driver, the encoders and switches, and the display — conditioning and isolating those signals along the way so the compute talks cleanly to noisy, high-current hardware.</p>
+      <p>I worked on the <b>v1.4</b> revision of the board.</p>
     </section>
 
     <section>
-      <h2>What I did</h2>
+      <h2>Architecture</h2>
+      <figure class="figure">
+        <svg viewBox="0 0 700 320" role="img" aria-label="Interconnect board architecture block diagram">
+          <defs>
+            <marker id="ar2" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+              <path d="M0,0 L7,3 L0,6 Z" fill="#5a6b67" />
+            </marker>
+          </defs>
+          <g font-family="-apple-system, Segoe UI, sans-serif" font-size="13" fill="#cdd9d6" text-anchor="middle">
+            <!-- compute -->
+            <rect x="16" y="120" width="150" height="72" rx="8" fill="#0e1618" stroke="#45c7ab"/>
+            <text x="91" y="150" fill="#8fe6d3">Jetson Nano</text>
+            <text x="91" y="170" font-size="11" fill="#8b9a96">onboard compute</text>
+
+            <!-- conditioning -->
+            <rect x="250" y="70" width="170" height="180" rx="8" fill="#101617" stroke="#2b3a38"/>
+            <text x="335" y="96" font-size="12" fill="#45c7ab" font-family="monospace">CONDITIONING</text>
+            <text x="335" y="128">Buffers</text>
+            <text x="335" y="158">Low-pass filters</text>
+            <text x="335" y="188">Optocoupler</text>
+            <text x="335" y="204" font-size="11" fill="#8b9a96">isolation</text>
+
+            <!-- peripherals -->
+            <rect x="504" y="60"  width="180" height="40" rx="8" fill="#101617" stroke="#2b3a38"/>
+            <text x="594" y="85">Radio · SPI</text>
+            <rect x="504" y="112" width="180" height="40" rx="8" fill="#101617" stroke="#2b3a38"/>
+            <text x="594" y="137">Motor driver</text>
+            <rect x="504" y="164" width="180" height="40" rx="8" fill="#101617" stroke="#2b3a38"/>
+            <text x="594" y="189">Encoder &amp; switches</text>
+            <rect x="504" y="216" width="180" height="40" rx="8" fill="#101617" stroke="#2b3a38"/>
+            <text x="594" y="241">Display</text>
+          </g>
+          <!-- arrows compute <-> conditioning -->
+          <line x1="166" y1="156" x2="250" y2="156" stroke="#5a6b67" stroke-width="1.5" marker-end="url(#ar2)"/>
+          <!-- conditioning -> peripherals -->
+          <line x1="420" y1="120" x2="504" y2="80"  stroke="#5a6b67" stroke-width="1.5" marker-end="url(#ar2)"/>
+          <line x1="420" y1="140" x2="504" y2="132" stroke="#5a6b67" stroke-width="1.5" marker-end="url(#ar2)"/>
+          <line x1="420" y1="180" x2="504" y2="184" stroke="#5a6b67" stroke-width="1.5" marker-end="url(#ar2)"/>
+          <line x1="420" y1="210" x2="504" y2="236" stroke="#5a6b67" stroke-width="1.5" marker-end="url(#ar2)"/>
+          <!-- power note -->
+          <text x="16" y="300" font-family="monospace" font-size="12" fill="#8b9a96">5 V logic power · on-board regulation</text>
+        </svg>
+        <figcaption>Board architecture — original diagram, drawn from the v1.4 schematic sheets.</figcaption>
+      </figure>
+    </section>
+
+    <section>
+      <h2>What's on the board</h2>
       <ul>
-        <li>Contributed to the v1.4 design of the interconnect board, routing the connections between the Raspberry Pi and the robot's signal lines.</li>
+        <li><b>Compute interface</b> — connects to the Jetson Nano and fans its I/O out to the robot.</li>
+        <li><b>Wireless radio</b> — an RF module for comms with the field computer, driven over an <b>SPI</b> link.</li>
+        <li><b>Signal conditioning</b> — buffers, low-pass filters (e.g., RC filtering on the encoder inputs), and optocouplers that isolate the low-voltage logic from the motor side.</li>
+        <li><b>Robot I/O</b> — motor driver, interface switches, and a status display, plus on-board 5 V power.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>My work on v1.4</h2>
+      <ul>
+        <li>Worked the v1.4 revision — layout and schematic changes, including cleaning up the radio connection and pruning unused signals and buffers from the previous revision.</li>
       </ul>
     </section>
 
@@ -50,8 +108,10 @@
       <div class="tags">
         <span>PCB Design</span>
         <span>Altium</span>
-        <span>Raspberry Pi</span>
+        <span>SPI</span>
         <span>Signal Integrity</span>
+        <span>Optocoupler Isolation</span>
+        <span>Jetson Nano</span>
       </div>
     </section>
   </main>

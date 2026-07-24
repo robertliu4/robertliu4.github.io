@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Robot Summer — Robert Liu</title>
-  <meta name="description" content="Robot Summer — an autonomous competition robot; mechanical and electrical design by Robert Liu." />
+  <meta name="description" content="Robot Summer — two collaborating autonomous robots that won UBC's Engineering Physics competition; mechanical and electrical design by Robert Liu." />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -19,14 +19,14 @@
     <div class="wrap">
       <span class="eyebrow">Competition robot · 2024</span>
       <h1>Robot Summer — Champion Robot</h1>
-      <p class="lead">An autonomous competition robot built with a teammate, where I owned both the mechanical build and the full electrical system.</p>
+      <p class="lead">Two autonomous robots that cooperate in real time to assemble a burger — they won UBC's Engineering Physics robotics competition against 14 other teams.</p>
       <p class="meta">
-        <b>Role:</b> Mechanical &amp; Electrical Design<br />
-        <b>Team:</b> Two-person team with Youssef Elbaz<br />
-        <b>Where:</b> Vancouver, BC
+        <b>Role:</b> Mechanical &amp; Electrical / PCB Design<br />
+        <b>Team:</b> Two-person team<br />
+        <b>Event:</b> UBC 2nd-year Engineering Physics robotics competition
       </p>
       <div class="actions">
-        <a class="primary" href="https://youssefelbaz32.github.io/Youssef_Portfolio/Robot_Summer.html" target="_blank" rel="noopener">Teammate's writeup ↗</a>
+        <a class="primary" href="https://www.youtube.com/watch?v=8mijFtf3gek" target="_blank" rel="noopener">Watch demo ↗</a>
       </div>
     </div>
   </header>
@@ -34,16 +34,69 @@
   <main class="content wrap">
     <section>
       <h2>Overview</h2>
-      <p>Robot Summer is a build-from-scratch robotics competition where a small team designs, fabricates, and programs a fully autonomous robot over a summer. Our robot had to sense its surroundings and drive itself through the course without any human control, which meant the mechanical chassis, the electronics, and the firmware all had to work together reliably.</p>
-      <p>I took ownership of two sides of that: the physical robot and the electrical system that brought it to life.</p>
+      <p>Robot Summer is UBC Engineering Physics' annual second-year robotics competition — teams design, build, and program autonomous robots from scratch over the summer. Our challenge was cooperative: two robots working together in real time to place ingredients, "cook" patties, and assemble a burger, mimicking the teamwork of <i>Overcooked</i>. Everything ran autonomously, and the two robots had to stay coordinated with no human input.</p>
+      <p>I owned two sides of the build — the mechanical robot and the electrical system that ran it — and the robots took first place against 14 other teams.</p>
+    </section>
+
+    <section>
+      <h2>Architecture</h2>
+      <figure class="figure">
+        <svg viewBox="0 0 700 250" role="img" aria-label="Two-robot system diagram">
+          <defs>
+            <marker id="ar3" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+              <path d="M0,0 L7,3 L0,6 Z" fill="#5a6b67" />
+            </marker>
+          </defs>
+          <g font-family="-apple-system, Segoe UI, sans-serif" font-size="12" fill="#cdd9d6" text-anchor="middle">
+            <!-- Robot A -->
+            <rect x="30" y="40" width="250" height="170" rx="10" fill="#0d1314" stroke="#2b3a38"/>
+            <text x="155" y="62" fill="#45c7ab" font-family="monospace" font-size="12">ROBOT A</text>
+            <rect x="105" y="78" width="100" height="34" rx="6" fill="#0e1618" stroke="#45c7ab"/>
+            <text x="155" y="100" fill="#8fe6d3">ESP32</text>
+            <rect x="50"  y="140" width="90" height="30" rx="6" fill="#101617" stroke="#2b3a38"/>
+            <text x="95"  y="160" font-size="11">Reflectance</text>
+            <rect x="170" y="140" width="90" height="30" rx="6" fill="#101617" stroke="#2b3a38"/>
+            <text x="215" y="160" font-size="11">H-bridges</text>
+            <rect x="50"  y="176" width="90" height="26" rx="6" fill="#101617" stroke="#2b3a38"/>
+            <text x="95"  y="194" font-size="11">Sensors</text>
+            <rect x="170" y="176" width="90" height="26" rx="6" fill="#101617" stroke="#2b3a38"/>
+            <text x="215" y="194" font-size="11">Steppers/servos</text>
+            <line x1="130" y1="112" x2="95" y2="140" stroke="#5a6b67" stroke-width="1.3" marker-end="url(#ar3)"/>
+            <line x1="180" y1="112" x2="215" y2="140" stroke="#5a6b67" stroke-width="1.3" marker-end="url(#ar3)"/>
+
+            <!-- Robot B -->
+            <rect x="420" y="40" width="250" height="170" rx="10" fill="#0d1314" stroke="#2b3a38"/>
+            <text x="545" y="62" fill="#45c7ab" font-family="monospace" font-size="12">ROBOT B</text>
+            <rect x="495" y="78" width="100" height="34" rx="6" fill="#0e1618" stroke="#45c7ab"/>
+            <text x="545" y="100" fill="#8fe6d3">ESP32</text>
+            <rect x="440" y="140" width="90" height="30" rx="6" fill="#101617" stroke="#2b3a38"/>
+            <text x="485" y="160" font-size="11">Reflectance</text>
+            <rect x="560" y="140" width="90" height="30" rx="6" fill="#101617" stroke="#2b3a38"/>
+            <text x="605" y="160" font-size="11">H-bridges</text>
+            <rect x="440" y="176" width="90" height="26" rx="6" fill="#101617" stroke="#2b3a38"/>
+            <text x="485" y="194" font-size="11">Sensors</text>
+            <rect x="560" y="176" width="90" height="26" rx="6" fill="#101617" stroke="#2b3a38"/>
+            <text x="605" y="194" font-size="11">Steppers/servos</text>
+            <line x1="520" y1="112" x2="485" y2="140" stroke="#5a6b67" stroke-width="1.3" marker-end="url(#ar3)"/>
+            <line x1="570" y1="112" x2="605" y2="140" stroke="#5a6b67" stroke-width="1.3" marker-end="url(#ar3)"/>
+
+            <!-- ESP-NOW link -->
+            <line x1="205" y1="95" x2="495" y2="95" stroke="#45c7ab" stroke-width="1.5" stroke-dasharray="5 4"/>
+            <text x="350" y="30" fill="#8fe6d3" font-family="monospace" font-size="11">ESP-NOW wireless link</text>
+            <text x="350" y="88" fill="#8b9a96" font-size="10">◀ · · · · · · · ▶</text>
+          </g>
+        </svg>
+        <figcaption>Two robots coordinating over an ESP-NOW wireless link.</figcaption>
+      </figure>
     </section>
 
     <section>
       <h2>What I did</h2>
       <ul>
-        <li><b>Mechanical design</b> — designed the robot's mechanical structure and the mounting/drivetrain that carried the electronics and actuators.</li>
-        <li><b>Custom PCBs</b> — designed and built the boards in KiCad for battery management, signal routing, and power distribution.</li>
-        <li><b>Bring-up &amp; debug</b> — used AD2 oscilloscopes and logic analyzers to verify the signals between an ESP32 and the stepper, servo, and H-bridge motor controllers, tracking down issues across the power and signal paths.</li>
+        <li><b>Mechanical design</b> — designed the robot's mechanical structure, drivetrain, and the actuation (a stepper-driven carousel plus servos) that let it manipulate ingredients.</li>
+        <li><b>Custom PCBs</b> — designed and built the boards in KiCad: power (with current sensing), sensor, actuator, I/O, and a distribution board with the stepper driver. The H-bridge motor drivers use opto-isolators to separate the high- and low-voltage grounds.</li>
+        <li><b>Firmware &amp; coordination</b> — the robots run on ESP32s and coordinate in real time over the ESP-NOW wireless protocol (C++), following black-tape paths with reflectance sensors.</li>
+        <li><b>Bring-up &amp; debug</b> — verified signals between the ESP32 and the stepper, servo, and H-bridge drivers with AD2 oscilloscopes and logic analyzers.</li>
       </ul>
     </section>
 
@@ -54,8 +107,10 @@
         <span>KiCad</span>
         <span>PCB Design</span>
         <span>ESP32</span>
-        <span>Oscilloscope</span>
-        <span>Embedded</span>
+        <span>ESP-NOW</span>
+        <span>H-bridge</span>
+        <span>Reflectance Sensors</span>
+        <span>C++</span>
       </div>
     </section>
   </main>
