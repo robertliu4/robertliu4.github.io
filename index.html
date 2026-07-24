@@ -3,38 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Robert Liu</title>
-  <meta name="description" content="Robert Liu — Engineering Physics @ UBC, Analog Mixed Signal Layout Engineer at AMD." />
+  <title>Robert Liu — Analog / Mixed-Signal</title>
+  <meta name="description" content="Robert Liu — Analog Mixed Signal Layout Engineer at AMD, Engineering Physics @ UBC." />
 
   <!-- ==========================================================
-       ROBERT — HOW TO EDIT THIS SITE
-       - Experience, Education, and Skills are filled in from your
-         LinkedIn. Tweak any wording you like.
-       - To add a project, copy one <article class="project"> block
+       ROBERT — HOW TO EDIT
+       - Content is filled in from your LinkedIn. Tweak any text.
+       - To add a project, copy one <article class="card"> block
          inside the projects grid and fill in the blanks.
-       - Change the whole site's accent color with --accent below.
-       - No build step needed. Just edit and save.
+       - Re-theme by changing --accent / --accent2 in :root below.
+       - The hero waveforms are drawn by the small script at the
+         bottom (analog sine = CH1, digital square = CH2).
   =========================================================== -->
 
   <style>
     :root {
-      --bg: #ffffff;
-      --text: #1a1a1a;
-      --muted: #666666;
-      --line: #e6e6e6;
-      --accent: #2563eb;      /* change this one color to re-theme the site */
-      --card: #fafafa;
-      --max: 760px;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #0f0f10;
-        --text: #ededed;
-        --muted: #9a9a9a;
-        --line: #262626;
-        --accent: #6ea8ff;
-        --card: #171718;
-      }
+      --bg:      #070b0c;
+      --bg2:     #0c1214;
+      --panel:   #0e1618;
+      --text:    #e7f0ee;
+      --muted:   #8296a0;
+      --line:    #17252a;
+      --grid:    rgba(46,230,196,0.055);
+      --accent:  #2ee6c0;   /* CH1 — analog / signal teal */
+      --accent2: #ffb454;   /* CH2 — digital / amber */
+      --max: 940px;
+      --mono: ui-monospace, "SF Mono", "JetBrains Mono", "Fira Code", Menlo, Consolas, monospace;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
     }
 
     * { box-sizing: border-box; }
@@ -43,124 +38,185 @@
       margin: 0;
       background: var(--bg);
       color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
-      line-height: 1.6;
+      font-family: var(--sans);
+      line-height: 1.65;
       -webkit-font-smoothing: antialiased;
+      position: relative;
+      overflow-x: hidden;
     }
-    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+    /* Oscilloscope graticule grid over the whole page */
+    body::before {
+      content: "";
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 44px 44px;
+      pointer-events: none;
+      z-index: 0;
+      mask-image: radial-gradient(ellipse 100% 70% at 50% 0%, #000 40%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 100% 70% at 50% 0%, #000 40%, transparent 100%);
+    }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
 
-    /* Top nav */
+    /* label chips (monospace) */
+    .label {
+      font-family: var(--mono);
+      font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    /* ---------- NAV ---------- */
     nav {
-      position: sticky; top: 0;
-      background: color-mix(in srgb, var(--bg) 88%, transparent);
-      backdrop-filter: blur(8px);
+      position: sticky; top: 0; z-index: 20;
+      background: color-mix(in srgb, var(--bg) 82%, transparent);
+      backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--line);
-      z-index: 10;
     }
-    nav .wrap {
-      display: flex; align-items: center; justify-content: space-between;
-      height: 60px;
+    nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 62px; }
+    nav .brand {
+      font-family: var(--mono); font-weight: 600; letter-spacing: 0.02em;
+      display: flex; align-items: center; gap: 9px;
     }
-    nav .name { font-weight: 600; letter-spacing: -0.01em; }
+    nav .brand .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent); box-shadow: 0 0 10px var(--accent);
+    }
     nav .links a {
-      color: var(--muted); text-decoration: none; margin-left: 20px;
-      font-size: 0.95rem;
+      font-family: var(--mono); font-size: 0.82rem;
+      color: var(--muted); text-decoration: none; margin-left: 22px;
     }
     nav .links a:hover { color: var(--accent); }
-    @media (max-width: 620px) {
-      nav .links a { margin-left: 12px; font-size: 0.85rem; }
-    }
+    @media (max-width: 660px) { nav .links a { margin-left: 13px; font-size: 0.74rem; } }
 
-    /* Hero */
-    header.hero { padding: 88px 0 60px; }
+    /* ---------- HERO ---------- */
+    header.hero { padding: 74px 0 40px; }
     header.hero h1 {
-      font-size: clamp(2.2rem, 6vw, 3.2rem);
-      margin: 0 0 14px; letter-spacing: -0.03em; line-height: 1.1;
+      font-size: clamp(2.6rem, 7vw, 4.1rem);
+      margin: 14px 0 16px; letter-spacing: -0.03em; line-height: 1.02; font-weight: 700;
     }
-    header.hero .tagline { font-size: 1.15rem; color: var(--text); margin: 0 0 8px; }
-    header.hero .location { color: var(--muted); margin: 0 0 26px; font-size: 0.98rem; }
+    header.hero h1 .glow { color: var(--accent); text-shadow: 0 0 24px rgba(46,230,196,0.45); }
+    header.hero .tagline { font-size: 1.2rem; color: var(--text); margin: 0 0 10px; max-width: 620px; }
+    header.hero .location {
+      font-family: var(--mono); color: var(--muted); font-size: 0.9rem; margin: 0 0 28px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    header.hero .location::before {
+      content: "◈"; color: var(--accent2);
+    }
     .cta a {
+      font-family: var(--mono); font-size: 0.85rem;
       display: inline-block; margin-right: 12px; margin-top: 4px;
-      padding: 10px 18px; border-radius: 8px; text-decoration: none;
-      font-size: 0.95rem; font-weight: 500;
+      padding: 11px 20px; border-radius: 7px; text-decoration: none; letter-spacing: 0.02em;
     }
-    .cta a.primary { background: var(--accent); color: #fff; }
+    .cta a.primary { background: var(--accent); color: #04110e; font-weight: 600; }
+    .cta a.primary:hover { box-shadow: 0 0 22px rgba(46,230,196,0.5); }
     .cta a.secondary { border: 1px solid var(--line); color: var(--text); }
-    .cta a:hover { opacity: 0.88; }
+    .cta a.secondary:hover { border-color: var(--accent); color: var(--accent); }
 
-    /* Sections */
-    section { padding: 46px 0; border-top: 1px solid var(--line); }
-    section h2 {
-      font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em;
-      color: var(--muted); margin: 0 0 28px; font-weight: 600;
+    /* Scope panel with mixed-signal trace */
+    .scope {
+      margin-top: 44px;
+      border: 1px solid var(--line); border-radius: 12px;
+      background: linear-gradient(180deg, var(--panel), var(--bg2));
+      overflow: hidden;
+      box-shadow: 0 0 0 1px rgba(46,230,196,0.04), 0 20px 60px -30px rgba(0,0,0,0.9);
     }
-    .about p { margin: 0; font-size: 1.05rem; }
+    .scope .bar {
+      display: flex; align-items: center; gap: 14px;
+      padding: 10px 16px; border-bottom: 1px solid var(--line);
+      font-family: var(--mono); font-size: 0.72rem; color: var(--muted);
+    }
+    .scope .bar .ch1 { color: var(--accent); }
+    .scope .bar .ch2 { color: var(--accent2); }
+    .scope .bar .spacer { flex: 1; }
+    .scope svg { display: block; width: 100%; height: 190px; }
 
-    /* Experience & Education entries */
-    .entry { margin-bottom: 30px; }
+    /* ---------- SECTIONS ---------- */
+    section { padding: 54px 0; position: relative; }
+    section + section { border-top: 1px solid var(--line); }
+    .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 34px; }
+    .sec-head h2 { font-size: 1.5rem; letter-spacing: -0.02em; margin: 0; font-weight: 650; }
+    .sec-head .idx { font-family: var(--mono); color: var(--muted); font-size: 0.8rem; }
+
+    /* Experience / Education entries — scope-channel style */
+    .entry {
+      position: relative; padding-left: 26px; margin-bottom: 30px;
+    }
     .entry:last-child { margin-bottom: 0; }
-    .entry .row {
-      display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+    .entry::before {
+      content: ""; position: absolute; left: 0; top: 8px;
+      width: 9px; height: 9px; border-radius: 50%;
+      background: var(--accent); box-shadow: 0 0 10px var(--accent);
     }
-    .entry .role { font-weight: 600; margin: 0; }
-    .entry .date { color: var(--muted); font-size: 0.88rem; white-space: nowrap; }
-    .entry .company { color: var(--accent); font-size: 0.95rem; margin: 2px 0 2px; }
-    .entry .meta { color: var(--muted); font-size: 0.88rem; margin: 0; }
-    @media (max-width: 520px) {
-      .entry .row { flex-direction: column; gap: 2px; }
+    .entry::after {
+      content: ""; position: absolute; left: 4px; top: 20px; bottom: -22px;
+      width: 1px; background: var(--line);
     }
+    .entry:last-child::after { display: none; }
+    .entry .row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+    .entry .role { font-weight: 650; margin: 0; font-size: 1.05rem; }
+    .entry .date { font-family: var(--mono); color: var(--muted); font-size: 0.8rem; white-space: nowrap; }
+    .entry .company { color: var(--accent); font-size: 0.95rem; margin: 3px 0 2px; }
+    .entry .meta { font-family: var(--mono); color: var(--muted); font-size: 0.8rem; margin: 0; }
+    @media (max-width: 540px) { .entry .row { flex-direction: column; gap: 2px; } }
 
-    /* Skills */
-    .skills-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-    .skills-tags span {
-      font-size: 0.9rem; color: var(--text);
-      border: 1px solid var(--line); background: var(--card);
-      border-radius: 999px; padding: 5px 14px;
-    }
+    .about p { margin: 0; font-size: 1.08rem; max-width: 680px; color: #cdd9d6; }
 
     /* Projects */
-    .projects { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    @media (max-width: 560px) { .projects { grid-template-columns: 1fr; } }
-    .project {
-      border: 1px solid var(--line); background: var(--card);
-      border-radius: 12px; padding: 20px; transition: border-color .15s, transform .15s;
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 620px) { .grid { grid-template-columns: 1fr; } }
+    .card {
+      position: relative; border: 1px solid var(--line); background: var(--panel);
+      border-radius: 10px; padding: 22px; transition: border-color .15s, transform .15s, box-shadow .15s;
     }
-    .project:hover { border-color: var(--accent); transform: translateY(-2px); }
-    .project h3 { margin: 0 0 8px; font-size: 1.05rem; }
-    .project p { margin: 0 0 14px; color: var(--muted); font-size: 0.95rem; }
-    .project .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
-    .project .tag {
-      font-size: 0.75rem; color: var(--muted);
-      border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px;
+    /* component-style corner brackets */
+    .card::before, .card::after {
+      content: ""; position: absolute; width: 12px; height: 12px; border: 1px solid var(--accent); opacity: .35;
     }
-    .project .plinks a {
-      color: var(--accent); text-decoration: none; font-size: 0.9rem; margin-right: 14px;
+    .card::before { top: 8px; left: 8px; border-right: none; border-bottom: none; }
+    .card::after { bottom: 8px; right: 8px; border-left: none; border-top: none; }
+    .card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 0 26px -8px rgba(46,230,196,0.35); }
+    .card h3 { margin: 4px 0 8px; font-size: 1.1rem; }
+    .card p { margin: 0 0 16px; color: var(--muted); font-size: 0.95rem; }
+    .card .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+    .card .tag {
+      font-family: var(--mono); font-size: 0.72rem; color: var(--muted);
+      border: 1px solid var(--line); border-radius: 5px; padding: 3px 9px;
     }
-    .project .plinks a:hover { text-decoration: underline; }
+    .card .plinks a {
+      font-family: var(--mono); color: var(--accent); text-decoration: none; font-size: 0.82rem; margin-right: 16px;
+    }
+    .card .plinks a:hover { text-decoration: underline; }
 
     /* Contact */
     .contact-links { display: flex; flex-wrap: wrap; gap: 12px; }
     .contact-links a {
-      display: inline-flex; align-items: center; gap: 8px;
-      border: 1px solid var(--line); border-radius: 8px; padding: 10px 16px;
-      text-decoration: none; color: var(--text); font-size: 0.95rem;
+      font-family: var(--mono); font-size: 0.88rem;
+      display: inline-flex; align-items: center; gap: 9px;
+      border: 1px solid var(--line); border-radius: 8px; padding: 12px 18px;
+      text-decoration: none; color: var(--text); background: var(--panel);
     }
-    .contact-links a:hover { border-color: var(--accent); color: var(--accent); }
+    .contact-links a .k { color: var(--accent); }
+    .contact-links a:hover { border-color: var(--accent); box-shadow: 0 0 20px -8px rgba(46,230,196,0.5); }
 
-    footer { padding: 40px 0 60px; color: var(--muted); font-size: 0.85rem; text-align: center; }
+    footer {
+      padding: 40px 0 60px; color: var(--muted);
+      font-family: var(--mono); font-size: 0.78rem; text-align: center;
+      border-top: 1px solid var(--line);
+    }
   </style>
 </head>
 <body>
 
   <nav>
     <div class="wrap">
-      <span class="name">Robert Liu</span>
+      <span class="brand"><span class="dot"></span>robert_liu</span>
       <div class="links">
-        <a href="#experience">Experience</a>
-        <a href="#education">Education</a>
-        <a href="#skills">Skills</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
+        <a href="#experience">./experience</a>
+        <a href="#education">./education</a>
+        <a href="#projects">./projects</a>
+        <a href="#contact">./contact</a>
       </div>
     </div>
   </nav>
@@ -168,12 +224,27 @@
   <!-- ============ HERO ============ -->
   <header class="hero">
     <div class="wrap">
-      <h1>Robert Liu</h1>
-      <p class="tagline">Analog Mixed Signal Layout Engineer at AMD · Engineering Physics @ UBC</p>
+      <span class="label">Analog · Mixed-Signal · Layout</span>
+      <h1>Robert <span class="glow">Liu</span></h1>
+      <p class="tagline">Analog Mixed Signal Layout Engineer at AMD · Engineering Physics @ UBC.</p>
       <p class="location">Vancouver, British Columbia, Canada</p>
       <div class="cta">
         <a class="primary" href="#projects">View projects</a>
         <a class="secondary" href="#contact">Get in touch</a>
+      </div>
+
+      <!-- Mixed-signal scope panel: analog sine (CH1) + digital square (CH2) -->
+      <div class="scope">
+        <div class="bar">
+          <span class="ch1">● CH1 · ANALOG</span>
+          <span class="ch2">● CH2 · DIGITAL</span>
+          <span class="spacer"></span>
+          <span>MIXED-SIGNAL · 2.00V/div · 1.0ms/div</span>
+        </div>
+        <svg id="trace" viewBox="0 0 940 190" preserveAspectRatio="none" aria-hidden="true">
+          <polyline id="sine"   fill="none" stroke="#2ee6c0" stroke-width="2"   stroke-linejoin="round" />
+          <polyline id="square" fill="none" stroke="#ffb454" stroke-width="1.8" stroke-linejoin="miter" opacity="0.9" />
+        </svg>
       </div>
     </div>
   </header>
@@ -181,8 +252,8 @@
   <!-- ============ ABOUT ============ -->
   <section id="about" class="about">
     <div class="wrap">
-      <h2>About</h2>
-      <!-- EDIT: rewrite this in your own voice anytime -->
+      <div class="sec-head"><span class="idx">00</span><h2>About</h2></div>
+      <!-- EDIT: rewrite in your own voice anytime -->
       <p>Engineering Physics student at UBC (Electrical Option) and Analog Mixed Signal Layout Engineer at AMD. I work across analog/mixed-signal design and electrical test, with hands-on experience spanning semiconductors, robotics, and aerospace.</p>
     </div>
   </section>
@@ -190,7 +261,7 @@
   <!-- ============ EXPERIENCE ============ -->
   <section id="experience">
     <div class="wrap">
-      <h2>Experience</h2>
+      <div class="sec-head"><span class="idx">01</span><h2>Experience</h2></div>
 
       <div class="entry">
         <div class="row">
@@ -221,38 +292,11 @@
 
       <div class="entry">
         <div class="row">
-          <p class="role">Undergraduate Research Assistant</p>
-          <span class="date">Aug 2023 – Mar 2024</span>
-        </div>
-        <div class="company">UBC Electrical and Computer Engineering · Part-time</div>
-        <p class="meta">Vancouver, British Columbia, Canada</p>
-      </div>
-
-      <div class="entry">
-        <div class="row">
           <p class="role">Engineer in Training</p>
           <span class="date">May 2023 – Aug 2023</span>
         </div>
         <div class="company">Unified Engineering · Internship</div>
         <p class="meta">Hamilton, Ontario, Canada</p>
-      </div>
-
-      <div class="entry">
-        <div class="row">
-          <p class="role">Student Intern</p>
-          <span class="date">Jul 2020 – Sep 2020</span>
-        </div>
-        <div class="company">UC Irvine · Internship</div>
-        <p class="meta">Irvine, California, United States</p>
-      </div>
-
-      <div class="entry">
-        <div class="row">
-          <p class="role">Teacher Assistant</p>
-          <span class="date">Sep 2018 – Jun 2020</span>
-        </div>
-        <div class="company">Spirit of Math Schools Inc. · Contract Part-time</div>
-        <p class="meta">Mississauga, Ontario, Canada</p>
       </div>
 
     </div>
@@ -261,7 +305,7 @@
   <!-- ============ EDUCATION ============ -->
   <section id="education">
     <div class="wrap">
-      <h2>Education</h2>
+      <div class="sec-head"><span class="idx">02</span><h2>Education</h2></div>
       <div class="entry">
         <div class="row">
           <p class="role">The University of British Columbia</p>
@@ -272,35 +316,14 @@
     </div>
   </section>
 
-  <!-- ============ SKILLS ============ -->
-  <section id="skills">
-    <div class="wrap">
-      <h2>Skills</h2>
-      <!-- EDIT: add or remove skills freely -->
-      <div class="skills-tags">
-        <span>C</span>
-        <span>LaTeX</span>
-        <span>Computer-Aided Design (CAD)</span>
-        <span>Finite Element Analysis (FEA)</span>
-        <span>Oscilloscope</span>
-        <span>Breadboarding</span>
-        <span>Experimental Design</span>
-        <span>Experimental Research</span>
-        <span>Experimental Analysis</span>
-        <span>Enterprise Resource Planning (ERP)</span>
-        <span>Microsoft Excel</span>
-      </div>
-    </div>
-  </section>
-
   <!-- ============ PROJECTS ============ -->
   <section id="projects">
     <div class="wrap">
-      <h2>Projects</h2>
-      <div class="projects">
+      <div class="sec-head"><span class="idx">03</span><h2>Projects</h2></div>
+      <div class="grid">
 
-        <!-- EDIT: copy this <article> block for each project -->
-        <article class="project">
+        <!-- EDIT: copy this <article class="card"> block for each project -->
+        <article class="card">
           <h3>Project Name</h3>
           <p>A short description of what this project does and why it matters.</p>
           <div class="tags">
@@ -309,12 +332,12 @@
             <span class="tag">Here</span>
           </div>
           <div class="plinks">
-            <a href="#" target="_blank" rel="noopener">Live demo →</a>
-            <a href="#" target="_blank" rel="noopener">Code →</a>
+            <a href="#" target="_blank" rel="noopener">live_demo →</a>
+            <a href="#" target="_blank" rel="noopener">code →</a>
           </div>
         </article>
 
-        <article class="project">
+        <article class="card">
           <h3>Project Name</h3>
           <p>A short description of what this project does and why it matters.</p>
           <div class="tags">
@@ -322,12 +345,12 @@
             <span class="tag">Stack</span>
           </div>
           <div class="plinks">
-            <a href="#" target="_blank" rel="noopener">Live demo →</a>
-            <a href="#" target="_blank" rel="noopener">Code →</a>
+            <a href="#" target="_blank" rel="noopener">live_demo →</a>
+            <a href="#" target="_blank" rel="noopener">code →</a>
           </div>
         </article>
 
-        <article class="project">
+        <article class="card">
           <h3>Project Name</h3>
           <p>A short description of what this project does and why it matters.</p>
           <div class="tags">
@@ -335,11 +358,11 @@
             <span class="tag">Stack</span>
           </div>
           <div class="plinks">
-            <a href="#" target="_blank" rel="noopener">Code →</a>
+            <a href="#" target="_blank" rel="noopener">code →</a>
           </div>
         </article>
 
-        <article class="project">
+        <article class="card">
           <h3>Project Name</h3>
           <p>A short description of what this project does and why it matters.</p>
           <div class="tags">
@@ -347,7 +370,7 @@
             <span class="tag">Stack</span>
           </div>
           <div class="plinks">
-            <a href="#" target="_blank" rel="noopener">Code →</a>
+            <a href="#" target="_blank" rel="noopener">code →</a>
           </div>
         </article>
 
@@ -358,21 +381,42 @@
   <!-- ============ CONTACT ============ -->
   <section id="contact">
     <div class="wrap">
-      <h2>Contact</h2>
+      <div class="sec-head"><span class="idx">04</span><h2>Contact</h2></div>
       <div class="contact-links">
-        <a href="mailto:robertliu401@gmail.com">Email</a>
-        <a href="https://www.linkedin.com/in/robert-liu-1a3730137/" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://github.com/robertliu4" target="_blank" rel="noopener">GitHub</a>
+        <a href="mailto:robertliu401@gmail.com"><span class="k">email:</span> robertliu401@gmail.com</a>
+        <a href="https://www.linkedin.com/in/robert-liu-1a3730137/" target="_blank" rel="noopener"><span class="k">linkedin:</span> robert-liu</a>
+        <a href="https://github.com/robertliu4" target="_blank" rel="noopener"><span class="k">github:</span> robertliu4</a>
       </div>
     </div>
   </section>
 
   <footer>
-    <div class="wrap">© <span id="year"></span> Robert Liu</div>
+    <div class="wrap">© <span id="year"></span> Robert Liu · built with signal &amp; solder</div>
   </footer>
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Draw the mixed-signal traces (static — no animation)
+    (function () {
+      var W = 940, H = 190;
+      // CH1 — analog sine
+      var sine = [];
+      for (var x = 0; x <= W; x += 4) {
+        var y = H * 0.62 - 34 * Math.sin((x / W) * Math.PI * 8);
+        sine.push(x + "," + y.toFixed(1));
+      }
+      document.getElementById("sine").setAttribute("points", sine.join(" "));
+
+      // CH2 — digital square wave
+      var sq = [], period = 94, hi = H * 0.24, lo = H * 0.42, y = lo, cur = lo;
+      for (var xi = 0; xi <= W; xi += period / 2) {
+        sq.push(xi + "," + cur);            // horizontal to edge
+        cur = (cur === lo) ? hi : lo;        // toggle
+        sq.push(xi + "," + cur);            // vertical edge
+      }
+      document.getElementById("square").setAttribute("points", sq.join(" "));
+    })();
   </script>
 </body>
 </html>
