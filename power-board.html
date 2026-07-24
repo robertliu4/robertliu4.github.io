@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thunderbots Power Board (v3.6) — Robert Liu</title>
-  <meta name="description" content="UBC Thunderbots power board (v3.6) — battery system, multiple regulated rails, 240 V kicker supply discharged through a solenoid. LTSpice simulation, Cadence design, Altium stacked layout." />
+  <title>Thunderbots Power Board (v3.6) · Robert Liu</title>
+  <meta name="description" content="UBC Thunderbots power board (v3.6): battery system, multiple regulated rails, 240 V kicker supply discharged through a solenoid. LTSpice simulation, Cadence design, Altium stacked layout." />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -19,9 +19,9 @@
     <div class="wrap">
       <span class="eyebrow">UBC Thunderbots · PCB</span>
       <h1>Power Board (v3.6)</h1>
-      <p class="lead">The power and distribution board for UBC Thunderbots' autonomous soccer robots — it runs the whole robot's power, from a battery system and low-voltage logic rails up to a 240 V kicker supply.</p>
+      <p class="lead">The power and distribution board for UBC Thunderbots' autonomous soccer robots: it runs the whole robot's power, from a battery system and low-voltage logic rails up to a 240 V kicker supply.</p>
       <p class="meta">
-        <b>Role:</b> Simulation · design · layout — v3.6 revision<br />
+        <b>Role:</b> Simulation · design · layout · v3.6 revision<br />
         <b>Team:</b> UBC Thunderbots (RoboCup Small Size League)<br />
         <b>Tools:</b> Altium · LTSpice · Cadence
       </p>
@@ -36,7 +36,7 @@
   <main class="content wrap">
     <section>
       <h2>Overview</h2>
-      <p>UBC Thunderbots builds fully autonomous soccer robots for the RoboCup Small Size League. The power board is the heart of the robot's electrical system: it takes the battery and generates every voltage the robot needs — logic rails, motor power, and a high-voltage supply for the kicker. It has to deliver all of that reliably, in a tight stacked form factor, without overheating under match load.</p>
+      <p>UBC Thunderbots builds fully autonomous soccer robots for the RoboCup Small Size League. The power board is the heart of the robot's electrical system: it takes the battery and generates every voltage the robot needs: logic rails, motor power, and a high-voltage supply for the kicker. It has to deliver all of that reliably, in a tight stacked form factor, without overheating under match load.</p>
     </section>
 
     <section>
@@ -79,27 +79,27 @@
           <line x1="360" y1="219" x2="404" y2="219" stroke="#5a6b67" stroke-width="1.5" marker-end="url(#ar)"/>
           <line x1="325" y1="268" x2="325" y2="242" stroke="#5a6b67" stroke-width="1.5" marker-end="url(#ar)"/>
         </svg>
-        <figcaption>Board architecture — original diagram, drawn from the v3.6 schematic sheets.</figcaption>
+        <figcaption>Board architecture: original diagram, drawn from the v3.6 schematic sheets.</figcaption>
       </figure>
     </section>
 
     <section>
       <h2>What's on the board</h2>
       <ul>
-        <li><b>Battery &amp; power levels</b> — takes the robot's battery and generates multiple regulated rails: 12 V and 5 V for power, plus a 3.3 V logic rail used by the IO board.</li>
-        <li><b>High-voltage kicker</b> — a flyback converter charges a capacitor bank up to <b>240 V</b>, which is dumped through a <b>solenoid</b> to kick the ball, with high-voltage sensing and an <b>auto-discharge</b> safety circuit to bleed the caps down when idle.</li>
-        <li><b>Current &amp; power telemetry</b> — INA226 monitors read rail current and power over an <b>I²C</b> bus, so the robot can watch its own power draw.</li>
-        <li><b>Peripheral interfaces</b> — break-beam ball detection, the Geneva dribbler mechanism, and an MCU breakout.</li>
+        <li><b>Battery &amp; power levels</b>: takes the robot's battery and generates multiple regulated rails: 12 V and 5 V for power, plus a 3.3 V logic rail used by the IO board.</li>
+        <li><b>High-voltage kicker</b>: a flyback converter charges a capacitor bank up to <b>240 V</b>, which is dumped through a <b>solenoid</b> to kick the ball, with high-voltage sensing and an <b>auto-discharge</b> safety circuit to bleed the caps down when idle.</li>
+        <li><b>Current &amp; power telemetry</b>: INA226 monitors read rail current and power over an <b>I²C</b> bus, so the robot can watch its own power draw.</li>
+        <li><b>Peripheral interfaces</b>: break-beam ball detection, the Geneva dribbler mechanism, and an MCU breakout.</li>
       </ul>
     </section>
 
     <section>
       <h2>My work</h2>
       <ul>
-        <li><b>Simulation</b> — modelled and validated the power stages in LTSpice before committing to hardware.</li>
-        <li><b>Design</b> — contributed to the circuit design in Cadence.</li>
-        <li><b>Layout</b> — did the board layout in Altium, designing it as a <b>stacked board structure</b> to fit the robot's tight footprint.</li>
-        <li><b>v3.6 revision</b> — resolving overheating hotspots and reliability issues so the board holds up under sustained load.</li>
+        <li><b>Simulation</b>: modelled and validated the power stages in LTSpice before committing to hardware.</li>
+        <li><b>Design</b>: contributed to the circuit design in Cadence.</li>
+        <li><b>Layout</b>: did the board layout in Altium, designing it as a <b>stacked board structure</b> to fit the robot's tight footprint.</li>
+        <li><b>v3.6 revision</b>: resolving overheating hotspots and reliability issues so the board holds up under sustained load.</li>
       </ul>
     </section>
 

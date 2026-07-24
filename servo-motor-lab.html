@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Servo Motor Control System (ENPH259) — Robert Liu</title>
-  <meta name="description" content="ENPH259 final lab — a closed-loop DC motor speed controller built from discrete logic and analog electronics: optical tachometer, counter, R-2R DAC, op-amp error amplifier, BJT driver." />
+  <title>Servo Motor Control System (ENPH259) · Robert Liu</title>
+  <meta name="description" content="ENPH259 final lab: a closed-loop DC motor speed controller built from discrete logic and analog electronics: optical tachometer, counter, R-2R DAC, op-amp error amplifier, BJT driver." />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -19,10 +19,10 @@
     <div class="wrap">
       <span class="eyebrow">ENPH259 · Analog / mixed-signal control</span>
       <h1>Servo Motor Control System</h1>
-      <p class="lead">A closed-loop DC-motor speed controller built from scratch out of discrete logic and analog electronics — a hands-on mixed-signal control system.</p>
+      <p class="lead">A closed-loop DC-motor speed controller built from scratch out of discrete logic and analog electronics: a hands-on mixed-signal control system.</p>
       <p class="meta">
         <b>Role:</b> Design, build &amp; test (individual)<br />
-        <b>Course:</b> ENPH259 (Experimental Techniques), UBC — final lab<br />
+        <b>Course:</b> ENPH259 (Experimental Techniques), UBC, final lab<br />
         <b>Type:</b> Feedback control · discrete digital + analog
       </p>
     </div>
@@ -77,23 +77,23 @@
           <line x1="256" y1="150" x2="245" y2="150" stroke="#5a6b67" stroke-width="1.5"/>
           <line x1="245" y1="150" x2="245" y2="104" stroke="#5a6b67" stroke-width="1.5" marker-end="url(#arv)"/>
         </svg>
-        <figcaption>Closed-loop speed control — analog regulation, digital speed measurement. A latch/reset timing generator (Schmidt-trigger delays) clocks the counter and latch.</figcaption>
+        <figcaption>Closed-loop speed control: analog regulation, digital speed measurement. A latch/reset timing generator (Schmidt-trigger delays) clocks the counter and latch.</figcaption>
       </figure>
     </section>
 
     <section>
       <h2>How the loop works</h2>
-      <p>The optical slot-sensor puts out one pulse per hole in a wheel on the motor shaft, so its pulse rate is the motor's speed. A timing generator built from Schmidt-trigger delay circuits latches the running count into a D-latch and then resets the counter every interval; an R-2R DAC turns that latched count back into an analog voltage. The op-amp error amplifier compares that measured-speed voltage against the setpoint potentiometer and drives the motor through the power transistor — closing the loop so the motor holds the set speed.</p>
+      <p>The optical slot-sensor puts out one pulse per hole in a wheel on the motor shaft, so its pulse rate is the motor's speed. A timing generator built from Schmidt-trigger delay circuits latches the running count into a D-latch and then resets the counter every interval; an R-2R DAC turns that latched count back into an analog voltage. The op-amp error amplifier compares that measured-speed voltage against the setpoint potentiometer and drives the motor through the power transistor, closing the loop so the motor holds the set speed.</p>
     </section>
 
     <section>
       <h2>Subsystems I built &amp; tested</h2>
       <ul>
-        <li><b>Latch &amp; reset generator</b> — Schmidt-trigger (CD74HC14E) delay circuits producing correctly-timed latch and reset pulses; I characterized the RC delays against the trigger's hysteresis.</li>
-        <li><b>Counter &amp; D-latch</b> — two 4-bit counters (74HCT393) cascaded into an 8-bit counter, latched by an octal D flip-flop (74HCT273); debugged a stuck count down to a single bad bit line.</li>
-        <li><b>8-bit R-2R DAC</b> — converts the latched count to an analog speed signal.</li>
-        <li><b>Motor sensor &amp; driver</b> — H21A3 optical interrupter as the tachometer; MJF122 Darlington power transistor (with flyback diode) as the motor driver.</li>
-        <li><b>Error-signal amplifier</b> — a UA741 op-amp comparing setpoint vs. measured speed; I derived its transfer function and verified the response on the scope.</li>
+        <li><b>Latch &amp; reset generator</b>: Schmidt-trigger (CD74HC14E) delay circuits producing correctly-timed latch and reset pulses; I characterized the RC delays against the trigger's hysteresis.</li>
+        <li><b>Counter &amp; D-latch</b>: two 4-bit counters (74HCT393) cascaded into an 8-bit counter, latched by an octal D flip-flop (74HCT273); debugged a stuck count down to a single bad bit line.</li>
+        <li><b>8-bit R-2R DAC</b>: converts the latched count to an analog speed signal.</li>
+        <li><b>Motor sensor &amp; driver</b>: H21A3 optical interrupter as the tachometer; MJF122 Darlington power transistor (with flyback diode) as the motor driver.</li>
+        <li><b>Error-signal amplifier</b>: a UA741 op-amp comparing setpoint vs. measured speed; I derived its transfer function and verified the response on the scope.</li>
       </ul>
     </section>
 

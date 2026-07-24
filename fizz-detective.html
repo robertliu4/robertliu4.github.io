@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Agent's Control System (Fizz Detective) — Robert Liu</title>
-  <meta name="description" content="ENPH353 Fizz Detective — an autonomous simulated agent with CNN-based clue recognition." />
+  <title>Agent's Control System (Fizz Detective) · Robert Liu</title>
+  <meta name="description" content="ENPH353 Fizz Detective: an autonomous simulated agent with CNN-based clue recognition." />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -18,7 +18,7 @@
   <header class="hero">
     <div class="wrap">
       <span class="eyebrow">ENPH353 · 2024</span>
-      <h1>Agent's Control System — “Fizz Detective”</h1>
+      <h1>Agent's Control System · “Fizz Detective”</h1>
       <p class="lead">An autonomous agent that drives a simulated robot through a Gazebo course and reads clue boards with computer vision and a trained neural network.</p>
       <p class="meta">
         <b>Role:</b> ROS integration · clue detection &amp; CNN training · GUI &amp; debug tools<br />
@@ -37,18 +37,18 @@
   <main class="content wrap">
     <section>
       <h2>Overview</h2>
-      <p>The Fizz Detective competition tests autonomous driving and computer vision inside a simulated Gazebo world. A robot has a strict four-minute window to navigate a multi-zone course — following lines, obeying traffic rules around dynamic obstacles, aligning through a narrow tunnel, and climbing a hill — while detecting and reporting up to eight clue boards to score points.</p>
+      <p>The Fizz Detective competition tests autonomous driving and computer vision inside a simulated Gazebo world. A robot has a strict four-minute window to navigate a multi-zone course (following lines, obeying traffic rules around dynamic obstacles, aligning through a narrow tunnel, and climbing a hill) while detecting and reporting up to eight clue boards to score points.</p>
       <p>We built a modular control system that splits the problem into perception, planning, and control, so the driving logic and the vision pipeline could be developed and debugged independently before being tied together over ROS.</p>
     </section>
 
     <section>
       <h2>My contributions</h2>
       <ul>
-        <li><b>ROS integration</b> — wired the driving and perception modules together over ROS topics into one cohesive pipeline.</li>
-        <li><b>Clue detection &amp; CNN</b> — built the clue-detection pipeline and trained a convolutional neural network to read the characters on the clue boards.</li>
-        <li><b>GUI &amp; debugging tools</b> — developed the graphical interface and debug tooling that made it possible to iterate quickly and identify errors in real time.</li>
+        <li><b>ROS integration</b>: wired the driving and perception modules together over ROS topics into one cohesive pipeline.</li>
+        <li><b>Clue detection &amp; CNN</b>: built the clue-detection pipeline and trained a convolutional neural network to read the characters on the clue boards.</li>
+        <li><b>GUI &amp; debugging tools</b>: developed the graphical interface and debug tooling that made it possible to iterate quickly and identify errors in real time.</li>
       </ul>
-      <p class="note">My teammate, Kamyar Momeni, developed the driving algorithms — line following and board detection.</p>
+      <p class="note">My teammate, Kamyar Momeni, developed the driving algorithms: line following and board detection.</p>
     </section>
 
     <section>

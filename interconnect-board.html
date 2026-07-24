@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thunderbots Interconnect / UI Board (v1.4) — Robert Liu</title>
-  <meta name="description" content="UBC Thunderbots UI / interconnect board (v1.4) — breaks the onboard compute's interfaces out to the robot: radio over SPI, motor driver, filtered I/O, isolation." />
+  <title>Thunderbots IO Board (v1.4) · Robert Liu</title>
+  <meta name="description" content="UBC Thunderbots IO board (v1.4), led by Robert Liu: breaks the onboard compute's interfaces out to the robot: radio over SPI, motor driver, filtered I/O, isolation." />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -18,10 +18,10 @@
   <header class="hero">
     <div class="wrap">
       <span class="eyebrow">UBC Thunderbots · PCB</span>
-      <h1>Interconnect / UI Board (v1.4)</h1>
-      <p class="lead">The board that ties the robot's onboard computer to every signal around it — radio, motors, sensors, switches, and display.</p>
+      <h1>IO Board (v1.4)</h1>
+      <p class="lead">The robot's IO board: it ties the onboard computer to every signal around it: radio, motors, sensors, switches, and display.</p>
       <p class="meta">
-        <b>Role:</b> Board design — v1.4 revision<br />
+        <b>Role:</b> Lead · v1.4 revision<br />
         <b>Team:</b> UBC Thunderbots (RoboCup Small Size League)<br />
         <b>Tools:</b> Altium Designer
       </p>
@@ -35,8 +35,8 @@
   <main class="content wrap">
     <section>
       <h2>Overview</h2>
-      <p>This is UBC Thunderbots' user-interface and interconnect PCB. It sits with the robot's onboard computer (a Jetson Nano) and breaks its interfaces out to the rest of the robot — the wireless radio, the motor driver, the encoders and switches, and the display — conditioning and isolating those signals along the way so the compute talks cleanly to noisy, high-current hardware.</p>
-      <p>I worked on the <b>v1.4</b> revision of the board.</p>
+      <p>This is UBC Thunderbots' user-interface and interconnect PCB. It sits with the robot's onboard computer (a Jetson Nano) and breaks its interfaces out to the rest of the robot (the wireless radio, the motor driver, the encoders and switches, and the display), conditioning and isolating those signals along the way so the compute talks cleanly to noisy, high-current hardware.</p>
+      <p>I was the <b>lead</b> on the board, driving the <b>v1.4</b> revision.</p>
     </section>
 
     <section>
@@ -82,24 +82,25 @@
           <!-- power note -->
           <text x="16" y="300" font-family="monospace" font-size="12" fill="#8b9a96">5 V logic power · on-board regulation</text>
         </svg>
-        <figcaption>Board architecture — original diagram, drawn from the v1.4 schematic sheets.</figcaption>
+        <figcaption>Board architecture: original diagram, drawn from the v1.4 schematic sheets.</figcaption>
       </figure>
     </section>
 
     <section>
       <h2>What's on the board</h2>
       <ul>
-        <li><b>Compute interface</b> — connects to the Jetson Nano and fans its I/O out to the robot.</li>
-        <li><b>Wireless radio</b> — an RF module for comms with the field computer, driven over an <b>SPI</b> link.</li>
-        <li><b>Signal conditioning</b> — buffers, low-pass filters (e.g., RC filtering on the encoder inputs), and optocouplers that isolate the low-voltage logic from the motor side.</li>
-        <li><b>Robot I/O</b> — motor driver, interface switches, and a status display, plus on-board 5 V power.</li>
+        <li><b>Compute interface</b>: connects to the Jetson Nano and fans its I/O out to the robot.</li>
+        <li><b>Wireless radio</b>: an RF module for comms with the field computer, driven over an <b>SPI</b> link.</li>
+        <li><b>Signal conditioning</b>: buffers, low-pass filters (e.g., RC filtering on the encoder inputs), and optocouplers that isolate the low-voltage logic from the motor side.</li>
+        <li><b>Robot I/O</b>: motor driver, interface switches, and a status display, plus on-board 5 V power.</li>
       </ul>
     </section>
 
     <section>
       <h2>My work on v1.4</h2>
       <ul>
-        <li>Worked the v1.4 revision — layout and schematic changes, including cleaning up the radio connection and pruning unused signals and buffers from the previous revision.</li>
+        <li>Led the v1.4 revision end to end: layout and schematic changes, including cleaning up the radio connection and pruning unused signals and buffers from the previous revision.</li>
+        <li>Also led the robot's <b>IMU sensor</b>, the inertial measurement unit that provides orientation and motion feedback.</li>
       </ul>
     </section>
 
@@ -112,6 +113,8 @@
         <span>Signal Integrity</span>
         <span>Optocoupler Isolation</span>
         <span>Jetson Nano</span>
+        <span>IMU</span>
+        <span>Lead</span>
       </div>
     </section>
   </main>
