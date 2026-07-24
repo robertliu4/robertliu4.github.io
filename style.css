@@ -1,11 +1,12 @@
 /* Shared styles for project detail pages */
 :root {
-  --bg:      #0b0f10;
-  --panel:   #101617;
-  --text:    #e8eeec;
-  --muted:   #8b9a96;
-  --line:    #1c2626;
-  --accent:  #45c7ab;
+  --bg:      #ffffff;
+  --panel:   #f4f7f6;
+  --text:    #16211f;
+  --muted:   #5c6b67;
+  --line:    #e4eae8;
+  --accent:  #0d9488;
+  --prose:   #33423e;
   --max: 760px;
   --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
   --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
@@ -43,7 +44,7 @@ nav .links a:hover { color: var(--accent); }
   font-size: 0.9rem; text-decoration: none; padding: 9px 16px; border-radius: 7px;
   border: 1px solid var(--line); color: var(--text); background: var(--panel);
 }
-.actions a.primary { background: var(--accent); color: #04110e; border-color: var(--accent); font-weight: 600; }
+.actions a.primary { background: var(--accent); color: #ffffff; border-color: var(--accent); font-weight: 600; }
 .actions a:hover { border-color: var(--accent); }
 .actions a.primary:hover { opacity: 0.9; }
 
@@ -54,9 +55,9 @@ main.content h2 {
   display: inline-block; position: relative; padding-bottom: 7px;
 }
 main.content h2::after { content: ""; position: absolute; left: 0; bottom: 0; width: 26px; height: 2px; background: var(--accent); }
-main.content p { margin: 0 0 14px; color: #cdd9d6; }
+main.content p { margin: 0 0 14px; color: var(--prose); }
 main.content ul { margin: 0; padding-left: 20px; }
-main.content ul li { color: #cdd9d6; margin-bottom: 8px; }
+main.content ul li { color: var(--prose); margin-bottom: 8px; }
 main.content ul li::marker { color: var(--accent); }
 
 .tags { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -70,7 +71,7 @@ main.content ul li::marker { color: var(--accent); }
 /* Figures / diagrams */
 .figure { margin: 6px 0; border: 1px solid var(--line); border-radius: 10px; background: #0d1314; padding: 16px; }
 .figure svg { width: 100%; height: auto; display: block; }
-.figure figcaption { color: var(--muted); font-size: 0.8rem; margin-top: 12px; text-align: center; font-family: var(--mono); }
+.figure figcaption { color: #93a29d; font-size: 0.8rem; margin-top: 12px; text-align: center; font-family: var(--mono); }
 
 /* Link lists */
 .linklist { list-style: none; padding: 0; margin: 0; }
@@ -84,7 +85,7 @@ main.content ul li::marker { color: var(--accent); }
 table.data { border-collapse: collapse; font-size: 0.9rem; margin: 4px 0; }
 table.data th, table.data td { border: 1px solid var(--line); padding: 6px 14px; text-align: right; }
 table.data th { color: var(--muted); font-family: var(--mono); font-weight: 500; }
-table.data td { color: #cdd9d6; }
+table.data td { color: var(--prose); }
 
 footer { padding: 40px 0 60px; margin-top: 30px; color: var(--muted); font-size: 0.85rem; text-align: center; border-top: 1px solid var(--line); }
 footer a { color: var(--accent); text-decoration: none; }
