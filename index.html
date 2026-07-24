@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Robert Liu</title>
+  <meta name="description" content="Robert Liu — personal website and portfolio." />
+
+  <!-- ==========================================================
+       ROBERT — HOW TO EDIT THIS SITE
+       - Your details live in clearly-marked sections below.
+       - To add a project, copy one <article class="project"> block
+         and paste it inside the projects grid. Fill in the blanks.
+       - To add a job, copy one <div class="entry"> block inside
+         the Experience section.
+       - No build step needed. Just edit and save.
+  =========================================================== -->
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #1a1a1a;
+      --muted: #666666;
+      --line: #e6e6e6;
+      --accent: #2563eb;      /* change this one color to re-theme the site */
+      --card: #fafafa;
+      --max: 720px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f0f10;
+        --text: #ededed;
+        --muted: #9a9a9a;
+        --line: #262626;
+        --accent: #6ea8ff;
+        --card: #171718;
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+
+    /* Top nav */
+    nav {
+      position: sticky; top: 0;
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+      z-index: 10;
+    }
+    nav .wrap {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    nav .name { font-weight: 600; letter-spacing: -0.01em; }
+    nav .links a {
+      color: var(--muted); text-decoration: none; margin-left: 22px;
+      font-size: 0.95rem;
+    }
+    nav .links a:hover { color: var(--accent); }
+    @media (max-width: 520px) { nav .links a { margin-left: 14px; } }
+
+    /* Hero */
+    header.hero { padding: 96px 0 64px; }
+    header.hero h1 {
+      font-size: clamp(2.2rem, 6vw, 3.2rem);
+      margin: 0 0 12px; letter-spacing: -0.03em; line-height: 1.1;
+    }
+    header.hero .tagline { font-size: 1.2rem; color: var(--muted); margin: 0 0 24px; }
+    .cta a {
+      display: inline-block; margin-right: 12px; margin-top: 4px;
+      padding: 10px 18px; border-radius: 8px; text-decoration: none;
+      font-size: 0.95rem; font-weight: 500;
+    }
+    .cta a.primary { background: var(--accent); color: #fff; }
+    .cta a.secondary { border: 1px solid var(--line); color: var(--text); }
+    .cta a:hover { opacity: 0.88; }
+
+    /* Sections */
+    section { padding: 48px 0; border-top: 1px solid var(--line); }
+    section h2 {
+      font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--muted); margin: 0 0 28px; font-weight: 600;
+    }
+
+    /* Experience */
+    .entry { margin-bottom: 28px; }
+    .entry:last-child { margin-bottom: 0; }
+    .entry .row {
+      display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+    }
+    .entry .role { font-weight: 600; margin: 0; }
+    .entry .date { color: var(--muted); font-size: 0.9rem; white-space: nowrap; }
+    .entry .company { color: var(--accent); font-size: 0.95rem; margin: 2px 0 6px; }
+    .entry p.desc { margin: 0; color: var(--muted); }
+
+    /* Projects */
+    .projects { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 560px) { .projects { grid-template-columns: 1fr; } }
+    .project {
+      border: 1px solid var(--line); background: var(--card);
+      border-radius: 12px; padding: 20px; transition: border-color .15s, transform .15s;
+    }
+    .project:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .project h3 { margin: 0 0 8px; font-size: 1.05rem; }
+    .project p { margin: 0 0 14px; color: var(--muted); font-size: 0.95rem; }
+    .project .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+    .project .tag {
+      font-size: 0.75rem; color: var(--muted);
+      border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px;
+    }
+    .project .plinks a {
+      color: var(--accent); text-decoration: none; font-size: 0.9rem; margin-right: 14px;
+    }
+    .project .plinks a:hover { text-decoration: underline; }
+
+    /* Contact */
+    .contact-links { display: flex; flex-wrap: wrap; gap: 12px; }
+    .contact-links a {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid var(--line); border-radius: 8px; padding: 10px 16px;
+      text-decoration: none; color: var(--text); font-size: 0.95rem;
+    }
+    .contact-links a:hover { border-color: var(--accent); color: var(--accent); }
+
+    footer { padding: 40px 0 60px; color: var(--muted); font-size: 0.85rem; text-align: center; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="wrap">
+      <span class="name">Robert Liu</span>
+      <div class="links">
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <header class="hero">
+    <div class="wrap">
+      <h1>Robert Liu</h1>
+      <!-- EDIT: one-line description of what you do -->
+      <p class="tagline">Add a short tagline here — e.g. "Software developer building web apps."</p>
+      <div class="cta">
+        <a class="primary" href="#projects">View projects</a>
+        <a class="secondary" href="#contact">Get in touch</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ EXPERIENCE ============ -->
+  <section id="experience">
+    <div class="wrap">
+      <h2>Experience</h2>
+
+      <!-- EDIT: copy this block for each role -->
+      <div class="entry">
+        <div class="row">
+          <p class="role">Job Title</p>
+          <span class="date">Mon 20XX – Present</span>
+        </div>
+        <div class="company">Company Name</div>
+        <p class="desc">One or two lines about what you did and the impact you had.</p>
+      </div>
+
+      <div class="entry">
+        <div class="row">
+          <p class="role">Previous Job Title</p>
+          <span class="date">Mon 20XX – Mon 20XX</span>
+        </div>
+        <div class="company">Previous Company</div>
+        <p class="desc">One or two lines about what you did and the impact you had.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ PROJECTS ============ -->
+  <section id="projects">
+    <div class="wrap">
+      <h2>Projects</h2>
+      <div class="projects">
+
+        <!-- EDIT: copy this <article> block for each project -->
+        <article class="project">
+          <h3>Project Name</h3>
+          <p>A short description of what this project does and why it matters.</p>
+          <div class="tags">
+            <span class="tag">Tech</span>
+            <span class="tag">Stack</span>
+            <span class="tag">Here</span>
+          </div>
+          <div class="plinks">
+            <a href="#" target="_blank" rel="noopener">Live demo →</a>
+            <a href="#" target="_blank" rel="noopener">Code →</a>
+          </div>
+        </article>
+
+        <article class="project">
+          <h3>Project Name</h3>
+          <p>A short description of what this project does and why it matters.</p>
+          <div class="tags">
+            <span class="tag">Tech</span>
+            <span class="tag">Stack</span>
+          </div>
+          <div class="plinks">
+            <a href="#" target="_blank" rel="noopener">Live demo →</a>
+            <a href="#" target="_blank" rel="noopener">Code →</a>
+          </div>
+        </article>
+
+        <article class="project">
+          <h3>Project Name</h3>
+          <p>A short description of what this project does and why it matters.</p>
+          <div class="tags">
+            <span class="tag">Tech</span>
+            <span class="tag">Stack</span>
+          </div>
+          <div class="plinks">
+            <a href="#" target="_blank" rel="noopener">Code →</a>
+          </div>
+        </article>
+
+        <article class="project">
+          <h3>Project Name</h3>
+          <p>A short description of what this project does and why it matters.</p>
+          <div class="tags">
+            <span class="tag">Tech</span>
+            <span class="tag">Stack</span>
+          </div>
+          <div class="plinks">
+            <a href="#" target="_blank" rel="noopener">Code →</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact">
+    <div class="wrap">
+      <h2>Contact</h2>
+      <div class="contact-links">
+        <a href="mailto:robertliu401@gmail.com">Email</a>
+        <a href="https://www.linkedin.com/in/robert-liu-1a3730137/" target="_blank" rel="noopener">LinkedIn</a>
+        <!-- EDIT: replace with your GitHub username -->
+        <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">© <span id="year"></span> Robert Liu</div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
