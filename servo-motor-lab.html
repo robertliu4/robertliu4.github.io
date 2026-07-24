@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Servo Motor Control System (ENPH259) — Robert Liu</title>
-  <meta name="description" content="ENPH259 — characterizing a servo as a closed-loop, mixed-signal control system: analog drive and sensing, digital acquisition and analysis." />
+  <meta name="description" content="ENPH259 final lab — a closed-loop DC motor speed controller built from discrete logic and analog electronics: optical tachometer, counter, R-2R DAC, op-amp error amplifier, BJT driver." />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -19,11 +19,11 @@
     <div class="wrap">
       <span class="eyebrow">ENPH259 · Analog / mixed-signal control</span>
       <h1>Servo Motor Control System</h1>
-      <p class="lead">Characterizing a servo as a closed-loop, mixed-signal control system — analog drive and position sensing, with digital acquisition and analysis.</p>
+      <p class="lead">A closed-loop DC-motor speed controller built from scratch out of discrete logic and analog electronics — a hands-on mixed-signal control system.</p>
       <p class="meta">
-        <b>Role:</b> Measurement, modelling &amp; analysis<br />
+        <b>Role:</b> Design, build &amp; test (individual)<br />
         <b>Course:</b> ENPH259 (Experimental Techniques), UBC — final lab<br />
-        <b>Focus:</b> Feedback control · mixed-signal signal chain
+        <b>Type:</b> Feedback control · discrete digital + analog
       </p>
     </div>
   </header>
@@ -31,74 +31,89 @@
   <main class="content wrap">
     <section>
       <h2>Overview</h2>
-      <p>A servo is a control system before it is anything else: a motor, a position sensor, and a controller wired into a feedback loop that continuously drives the output toward a commanded target. It is also inherently <b>mixed-signal</b> — the controller and data acquisition live in the digital domain, while the drive to the motor and the position feedback are analog. That split is exactly the kind of signal chain I work on, which is why I framed this lab around the control system rather than the motor alone.</p>
-      <p>For the ENPH259 final lab I characterized the servo end to end: driving it, measuring how it responds, and modelling that behaviour as a closed-loop system.</p>
+      <p>For the ENPH259 final lab I designed, built, and tested a servo control loop that actively regulates a DC motor's speed. It's a genuine mixed-signal control system: the motor's speed is measured on the digital side (an optical tachometer feeding a counter, latch, and DAC), while the regulation happens on the analog side (an op-amp error amplifier driving the motor through a power transistor). A potentiometer sets the target speed, and the loop holds the motor there.</p>
     </section>
 
     <section>
       <h2>The control loop</h2>
       <figure class="figure">
-        <svg viewBox="0 0 720 250" role="img" aria-label="Servo feedback control loop diagram">
+        <svg viewBox="0 0 720 300" role="img" aria-label="Discrete servo speed-control loop diagram">
           <defs>
-            <marker id="ars" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+            <marker id="arv" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
               <path d="M0,0 L7,3 L0,6 Z" fill="#5a6b67" />
             </marker>
           </defs>
-          <!-- domain labels -->
-          <text x="220" y="48" text-anchor="middle" fill="#45c7ab" font-family="monospace" font-size="11">DIGITAL</text>
-          <text x="500" y="48" text-anchor="middle" fill="#ffb454" font-family="monospace" font-size="11">ANALOG</text>
-          <g font-family="-apple-system, Segoe UI, sans-serif" font-size="12" fill="#cdd9d6" text-anchor="middle">
+          <text x="300" y="42" text-anchor="middle" fill="#ffb454" font-family="monospace" font-size="11">ANALOG · op-amp · BJT · sensor</text>
+          <text x="330" y="188" text-anchor="middle" fill="#45c7ab" font-family="monospace" font-size="11">DIGITAL · count · latch · DAC</text>
+          <g font-family="-apple-system, Segoe UI, sans-serif" font-size="12.5" fill="#cdd9d6" text-anchor="middle">
             <!-- forward path -->
-            <rect x="10" y="80" width="90" height="42" rx="8" fill="#101617" stroke="#2b3a38"/>
-            <text x="55" y="105">Setpoint</text>
-            <circle cx="130" cy="101" r="15" fill="#0e1618" stroke="#45c7ab"/>
-            <text x="130" y="106" font-size="14" fill="#8fe6d3">Σ</text>
-            <rect x="160" y="80" width="120" height="42" rx="8" fill="#101617" stroke="#2b3a38"/>
-            <text x="220" y="105">Controller</text>
-            <rect x="310" y="80" width="120" height="42" rx="8" fill="#101617" stroke="#2b3a38"/>
-            <text x="370" y="100">Driver</text><text x="370" y="115" font-size="10" fill="#8b9a96">PWM / analog</text>
-            <rect x="460" y="80" width="120" height="42" rx="8" fill="#101617" stroke="#2b3a38"/>
-            <text x="520" y="105">Servo motor</text>
-            <rect x="612" y="80" width="98" height="42" rx="8" fill="#0e1618" stroke="#45c7ab"/>
-            <text x="661" y="105" fill="#8fe6d3">Position</text>
+            <rect x="14"  y="60" width="120" height="44" rx="8" fill="#101617" stroke="#2b3a38"/>
+            <text x="74"  y="86">Setpoint pot</text>
+            <rect x="170" y="60" width="150" height="44" rx="8" fill="#0e1618" stroke="#45c7ab"/>
+            <text x="245" y="80" fill="#8fe6d3">Error amp</text><text x="245" y="95" font-size="10" fill="#8b9a96">op-amp (UA741)</text>
+            <rect x="356" y="60" width="140" height="44" rx="8" fill="#101617" stroke="#2b3a38"/>
+            <text x="426" y="80">BJT driver</text><text x="426" y="95" font-size="10" fill="#8b9a96">Darlington + flyback</text>
+            <rect x="532" y="60" width="110" height="44" rx="8" fill="#101617" stroke="#2b3a38"/>
+            <text x="587" y="86">DC motor</text>
 
             <!-- feedback path -->
-            <rect x="360" y="185" width="140" height="40" rx="8" fill="#101617" stroke="#2b3a38"/>
-            <text x="430" y="209">Position sensor</text>
-            <rect x="230" y="185" width="90" height="40" rx="8" fill="#101617" stroke="#2b3a38"/>
-            <text x="275" y="209">ADC</text>
+            <rect x="532" y="212" width="110" height="44" rx="8" fill="#101617" stroke="#2b3a38"/>
+            <text x="587" y="232">Slot-sensor</text><text x="587" y="247" font-size="10" fill="#8b9a96">tachometer</text>
+            <rect x="386" y="212" width="120" height="44" rx="8" fill="#101617" stroke="#2b3a38"/>
+            <text x="446" y="232">8-bit counter</text><text x="446" y="247" font-size="10" fill="#8b9a96">+ D-latch</text>
+            <rect x="196" y="212" width="120" height="44" rx="8" fill="#0e1618" stroke="#45c7ab"/>
+            <text x="256" y="238" fill="#8fe6d3">R-2R DAC</text>
           </g>
           <!-- forward arrows -->
-          <line x1="100" y1="101" x2="114" y2="101" stroke="#5a6b67" stroke-width="1.5" marker-end="url(#ars)"/>
-          <line x1="146" y1="101" x2="160" y2="101" stroke="#5a6b67" stroke-width="1.5" marker-end="url(#ars)"/>
-          <line x1="280" y1="101" x2="310" y2="101" stroke="#5a6b67" stroke-width="1.5" marker-end="url(#ars)"/>
-          <line x1="430" y1="101" x2="460" y2="101" stroke="#5a6b67" stroke-width="1.5" marker-end="url(#ars)"/>
-          <line x1="580" y1="101" x2="612" y2="101" stroke="#5a6b67" stroke-width="1.5" marker-end="url(#ars)"/>
+          <line x1="134" y1="82" x2="170" y2="82" stroke="#5a6b67" stroke-width="1.5" marker-end="url(#arv)"/>
+          <line x1="320" y1="82" x2="356" y2="82" stroke="#5a6b67" stroke-width="1.5" marker-end="url(#arv)"/>
+          <line x1="496" y1="82" x2="532" y2="82" stroke="#5a6b67" stroke-width="1.5" marker-end="url(#arv)"/>
           <!-- feedback arrows -->
-          <line x1="661" y1="122" x2="661" y2="205" stroke="#5a6b67" stroke-width="1.5"/>
-          <line x1="661" y1="205" x2="500" y2="205" stroke="#5a6b67" stroke-width="1.5" marker-end="url(#ars)"/>
-          <line x1="360" y1="205" x2="320" y2="205" stroke="#5a6b67" stroke-width="1.5" marker-end="url(#ars)"/>
-          <line x1="230" y1="205" x2="130" y2="205" stroke="#5a6b67" stroke-width="1.5"/>
-          <line x1="130" y1="205" x2="130" y2="116" stroke="#5a6b67" stroke-width="1.5" marker-end="url(#ars)"/>
-          <text x="140" y="150" fill="#8b9a96" font-size="12">−</text>
+          <line x1="587" y1="104" x2="587" y2="212" stroke="#5a6b67" stroke-width="1.5" marker-end="url(#arv)"/>
+          <text x="600" y="160" fill="#8b9a96" font-size="10" text-anchor="start">speed</text>
+          <line x1="532" y1="234" x2="506" y2="234" stroke="#5a6b67" stroke-width="1.5" marker-end="url(#arv)"/>
+          <line x1="386" y1="234" x2="316" y2="234" stroke="#5a6b67" stroke-width="1.5" marker-end="url(#arv)"/>
+          <line x1="256" y1="212" x2="256" y2="150" stroke="#5a6b67" stroke-width="1.5"/>
+          <line x1="256" y1="150" x2="245" y2="150" stroke="#5a6b67" stroke-width="1.5"/>
+          <line x1="245" y1="150" x2="245" y2="104" stroke="#5a6b67" stroke-width="1.5" marker-end="url(#arv)"/>
         </svg>
-        <figcaption>Closed-loop servo: digital control and acquisition, analog drive and sensing — a mixed-signal feedback loop.</figcaption>
+        <figcaption>Closed-loop speed control — analog regulation, digital speed measurement. A latch/reset timing generator (Schmidt-trigger delays) clocks the counter and latch.</figcaption>
       </figure>
     </section>
 
     <section>
-      <h2>What I did</h2>
+      <h2>How the loop works</h2>
+      <p>The optical slot-sensor puts out one pulse per hole in a wheel on the motor shaft, so its pulse rate is the motor's speed. A timing generator built from Schmidt-trigger delay circuits latches the running count into a D-latch and then resets the counter every interval; an R-2R DAC turns that latched count back into an analog voltage. The op-amp error amplifier compares that measured-speed voltage against the setpoint potentiometer and drives the motor through the power transistor — closing the loop so the motor holds the set speed.</p>
+    </section>
+
+    <section>
+      <h2>Subsystems I built &amp; tested</h2>
       <ul>
-        <li><b>Drove and measured the servo</b> — commanded the motor and captured its response, treating the servo as a system with an input (command) and an output (position).</li>
-        <li><b>Characterized the response</b> — analyzed the motor's behaviour (how quickly and accurately it tracks a command, and how it settles) to pin down the parameters that describe the loop.</li>
-        <li><b>Modelled the control system</b> — related the measured behaviour back to the closed-loop feedback model, reasoning about stability and steady-state tracking.</li>
-        <li><b>Worked up the data in Python</b> — processed and visualized the measurements with NumPy, pandas, and Matplotlib in a Jupyter notebook.</li>
+        <li><b>Latch &amp; reset generator</b> — Schmidt-trigger (CD74HC14E) delay circuits producing correctly-timed latch and reset pulses; I characterized the RC delays against the trigger's hysteresis.</li>
+        <li><b>Counter &amp; D-latch</b> — two 4-bit counters (74HCT393) cascaded into an 8-bit counter, latched by an octal D flip-flop (74HCT273); debugged a stuck count down to a single bad bit line.</li>
+        <li><b>8-bit R-2R DAC</b> — converts the latched count to an analog speed signal.</li>
+        <li><b>Motor sensor &amp; driver</b> — H21A3 optical interrupter as the tachometer; MJF122 Darlington power transistor (with flyback diode) as the motor driver.</li>
+        <li><b>Error-signal amplifier</b> — a UA741 op-amp comparing setpoint vs. measured speed; I derived its transfer function and verified the response on the scope.</li>
       </ul>
     </section>
 
     <section>
+      <h2>Results</h2>
+      <p>I characterized the closed loop by sweeping the setpoint and reading back the motor speed. Speed tracked the setpoint voltage linearly, and the motor topped out around <b>4200 rpm</b>.</p>
+      <table class="data">
+        <tr><th>Setpoint (V)</th><th>Speed (RPM)</th></tr>
+        <tr><td>2.08</td><td>3450</td></tr>
+        <tr><td>1.79</td><td>2940</td></tr>
+        <tr><td>1.57</td><td>2550</td></tr>
+        <tr><td>1.38</td><td>2250</td></tr>
+        <tr><td>1.19</td><td>1920</td></tr>
+        <tr><td>1.09</td><td>1770</td></tr>
+      </table>
+    </section>
+
+    <section>
       <h2>Why it's mixed-signal</h2>
-      <p>The interesting part of a servo sits at the boundary between domains. The command and the control law are digital; the drive to the motor is an analog (PWM) power signal; and the position feedback is an analog measurement that has to be conditioned and digitized before the controller can act on it. Characterizing the loop means understanding both sides of that boundary at once — the same analog-plus-digital thinking that underpins mixed-signal design.</p>
+      <p>The whole point of this circuit sits at the analog/digital boundary. Speed is captured in the digital domain — counted, latched, and stored as an 8-bit number — then pushed back through a DAC into the analog domain, where an op-amp closes the control loop and a transistor delivers the power. Getting it working meant reasoning across both sides at once: digital timing and logic on one hand, op-amp behaviour and transistor drive on the other. That analog-plus-digital thinking is exactly what mixed-signal design is about.</p>
     </section>
 
     <section>
@@ -107,11 +122,11 @@
         <span>Control Systems</span>
         <span>Feedback Loop</span>
         <span>Mixed-Signal</span>
-        <span>PWM Drive</span>
-        <span>Analog Sensing</span>
-        <span>Data Acquisition</span>
-        <span>Python</span>
-        <span>NumPy / Matplotlib</span>
+        <span>Op-Amp (UA741)</span>
+        <span>R-2R DAC</span>
+        <span>Digital Logic</span>
+        <span>BJT Driver</span>
+        <span>Oscilloscope</span>
       </div>
     </section>
   </main>

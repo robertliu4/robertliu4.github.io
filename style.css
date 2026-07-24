@@ -80,5 +80,11 @@ main.content ul li::marker { color: var(--accent); }
 .linklist a:hover { text-decoration: underline; }
 .linklist .desc { color: var(--muted); }
 
+/* Data table */
+table.data { border-collapse: collapse; font-size: 0.9rem; margin: 4px 0; }
+table.data th, table.data td { border: 1px solid var(--line); padding: 6px 14px; text-align: right; }
+table.data th { color: var(--muted); font-family: var(--mono); font-weight: 500; }
+table.data td { color: #cdd9d6; }
+
 footer { padding: 40px 0 60px; margin-top: 30px; color: var(--muted); font-size: 0.85rem; text-align: center; border-top: 1px solid var(--line); }
 footer a { color: var(--accent); text-decoration: none; }
