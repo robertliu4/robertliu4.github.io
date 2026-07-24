@@ -99,6 +99,9 @@
     .entry .date { font-family: var(--mono); color: var(--muted); font-size: 0.82rem; white-space: nowrap; }
     .entry .company { color: var(--accent); font-size: 0.95rem; margin: 3px 0 2px; }
     .entry .meta { color: var(--muted); font-size: 0.9rem; margin: 0; }
+    .entry ul.bullets { margin: 11px 0 0; padding-left: 18px; }
+    .entry ul.bullets li { color: #cbd7d4; font-size: 0.95rem; margin-bottom: 5px; }
+    .entry ul.bullets li::marker { color: var(--accent); }
     @media (max-width: 540px) { .entry .row { flex-direction: column; gap: 2px; } }
 
     .about p { margin: 0; font-size: 1.08rem; max-width: 680px; color: #cdd9d6; }
@@ -184,6 +187,12 @@
         </div>
         <div class="company">AMD · Co-op</div>
         <p class="meta">Markham, Ontario, Canada · Hybrid</p>
+        <ul class="bullets">
+          <li>Built mixed-signal layouts in Cadence Virtuoso for hybrid PLL and FLL blocks, driving physical design from floorplanning through DRC, LVS, IR, and EM.</li>
+          <li>Verified designs with Siemens Calibre (DRC/LVS) and Totem (IR-drop &amp; EM), resolving violations to meet reliability and manufacturability targets.</li>
+          <li>Optimized analog layout for device matching, parasitics, shielding, and noise isolation across current mirrors, LDOs, and voltage-controlled oscillators.</li>
+          <li>Wrote Cadence SKILL scripts to streamline workflow by 50–90%; worked across advanced TSMC A14, N2P, N3, and N5 nodes through tapeout closure.</li>
+        </ul>
       </div>
 
       <div class="entry">
@@ -193,6 +202,10 @@
         </div>
         <div class="company">UBC Thunderbots · Part-time</div>
         <p class="meta">Vancouver, British Columbia, Canada · On-site</p>
+        <ul class="bullets">
+          <li>Improved power-distribution efficiency ~20% through electrical hardware design in Altium for soccer-playing robots.</li>
+          <li>Designed and soldered PCBs for power management and Raspberry Pi integration.</li>
+        </ul>
       </div>
 
       <div class="entry">
@@ -202,6 +215,10 @@
         </div>
         <div class="company">L3Harris Technologies · Co-op</div>
         <p class="meta">Halifax, Nova Scotia, Canada</p>
+        <ul class="bullets">
+          <li>Developed spectrum-analyzer-based electrical testing to validate system reliability under extreme conditions.</li>
+          <li>Verified fighter-jet electrical components using Python scripting and lab equipment; documented part options and system errors.</li>
+        </ul>
       </div>
 
       <div class="entry">
@@ -226,6 +243,7 @@
           <span class="date">Sep 2022 – Apr 2028</span>
         </div>
         <div class="company">BASc, Engineering Physics — Electrical Option</div>
+        <p class="meta">GPA: 4.0</p>
       </div>
     </div>
   </section>
@@ -236,6 +254,17 @@
       <h2>Projects</h2>
       <div class="grid">
 
+        <article class="card">
+          <h3>Robot Summer — Champion Robot</h3>
+          <p>Designed and built the robot's electrical system — battery management, signal, and power distribution — with custom PCBs in KiCad. Used AD2 oscilloscopes and logic analyzers to verify signals between an ESP32 and controllers for stepper motors, servos, and H-bridges.</p>
+          <div class="tags">
+            <span class="tag">KiCad</span>
+            <span class="tag">ESP32</span>
+            <span class="tag">PCB Design</span>
+            <span class="tag">Embedded</span>
+          </div>
+        </article>
+
         <!-- EDIT: copy this <article class="card"> block for each project -->
         <article class="card">
           <h3>Project Name</h3>
@@ -243,7 +272,6 @@
           <div class="tags">
             <span class="tag">Tech</span>
             <span class="tag">Stack</span>
-            <span class="tag">Here</span>
           </div>
           <div class="plinks">
             <a href="#" target="_blank" rel="noopener">Live demo →</a>
@@ -260,18 +288,6 @@
           </div>
           <div class="plinks">
             <a href="#" target="_blank" rel="noopener">Live demo →</a>
-            <a href="#" target="_blank" rel="noopener">Code →</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <h3>Project Name</h3>
-          <p>A short description of what this project does and why it matters.</p>
-          <div class="tags">
-            <span class="tag">Tech</span>
-            <span class="tag">Stack</span>
-          </div>
-          <div class="plinks">
             <a href="#" target="_blank" rel="noopener">Code →</a>
           </div>
         </article>
