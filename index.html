@@ -99,6 +99,8 @@
     .entry .date { font-family: var(--mono); color: var(--muted); font-size: 0.82rem; white-space: nowrap; }
     .entry .company { color: var(--accent); font-size: 0.95rem; margin: 3px 0 2px; }
     .entry .meta { color: var(--muted); font-size: 0.9rem; margin: 0; }
+    .entry .meta a { color: var(--accent); text-decoration: none; }
+    .entry .meta a:hover { text-decoration: underline; }
     .entry ul.bullets { margin: 11px 0 0; padding-left: 18px; }
     .entry ul.bullets li { color: #cbd7d4; font-size: 0.95rem; margin-bottom: 5px; }
     .entry ul.bullets li::marker { color: var(--accent); }
@@ -201,7 +203,7 @@
           <span class="date">Sep 2023 – Present</span>
         </div>
         <div class="company">UBC Thunderbots · Part-time</div>
-        <p class="meta">Vancouver, British Columbia, Canada · On-site</p>
+        <p class="meta">Vancouver, British Columbia, Canada · On-site · <a href="https://www.youtube.com/@UBCThunderbots" target="_blank" rel="noopener">Team →</a></p>
         <ul class="bullets">
           <li>Improved power-distribution efficiency ~20% through electrical hardware design in Altium for soccer-playing robots.</li>
           <li>Designed and soldered PCBs for power management and Raspberry Pi integration.</li>
@@ -256,51 +258,59 @@
 
         <article class="card">
           <h3>Robot Summer — Champion Robot</h3>
-          <p>Designed and built the robot's electrical system — battery management, signal, and power distribution — with custom PCBs in KiCad. Used AD2 oscilloscopes and logic analyzers to verify signals between an ESP32 and controllers for stepper motors, servos, and H-bridges.</p>
+          <p>A two-person autonomous competition robot where I handled both the mechanical design and the full electrical system — custom PCBs in KiCad for battery management, signal, and power distribution — verifying signals between an ESP32 and the stepper, servo, and H-bridge controllers with AD2 oscilloscopes and logic analyzers.</p>
           <div class="tags">
+            <span class="tag">Mechanical</span>
             <span class="tag">KiCad</span>
             <span class="tag">ESP32</span>
             <span class="tag">PCB Design</span>
-            <span class="tag">Embedded</span>
-          </div>
-        </article>
-
-        <!-- EDIT: copy this <article class="card"> block for each project -->
-        <article class="card">
-          <h3>Project Name</h3>
-          <p>A short description of what this project does and why it matters.</p>
-          <div class="tags">
-            <span class="tag">Tech</span>
-            <span class="tag">Stack</span>
           </div>
           <div class="plinks">
-            <a href="#" target="_blank" rel="noopener">Live demo →</a>
-            <a href="#" target="_blank" rel="noopener">Code →</a>
+            <a href="https://youssefelbaz32.github.io/Youssef_Portfolio/Robot_Summer.html" target="_blank" rel="noopener">Project page →</a>
           </div>
         </article>
 
         <article class="card">
-          <h3>Project Name</h3>
-          <p>A short description of what this project does and why it matters.</p>
+          <h3>Agent's Control System — “Fizz Detective”</h3>
+          <p>An autonomous agent for the ENPH353 Fizz Detective competition: it drives a simulated robot around a Gazebo course — line following, tunnel alignment, and hill navigation — and reads clue boards with a convolutional neural network built on OpenCV and ROS. Two-person team with Kamyar Momeni.</p>
           <div class="tags">
-            <span class="tag">Tech</span>
-            <span class="tag">Stack</span>
+            <span class="tag">ROS</span>
+            <span class="tag">Gazebo</span>
+            <span class="tag">OpenCV</span>
+            <span class="tag">Python</span>
+            <span class="tag">CNN</span>
           </div>
           <div class="plinks">
-            <a href="#" target="_blank" rel="noopener">Live demo →</a>
-            <a href="#" target="_blank" rel="noopener">Code →</a>
+            <a href="https://github.com/kmomeni04/Robot_Controller/tree/main" target="_blank" rel="noopener">Code →</a>
+            <a href="ENPH353_Final_Report.pdf" target="_blank" rel="noopener">Report →</a>
+            <a href="ENPH353_Logbook.pdf" target="_blank" rel="noopener">Logbook →</a>
+            <a href="https://www.youtube.com/watch?v=oxuRxtrO2Ag" target="_blank" rel="noopener">Demo →</a>
           </div>
         </article>
 
         <article class="card">
-          <h3>Project Name</h3>
-          <p>A short description of what this project does and why it matters.</p>
+          <h3>Thunderbots — Interconnect Board (UI v1.4)</h3>
+          <p>The interconnect board that ties the Raspberry Pi to every signal around the robot. I worked on the v1.4 revision.</p>
           <div class="tags">
-            <span class="tag">Tech</span>
-            <span class="tag">Stack</span>
+            <span class="tag">PCB Design</span>
+            <span class="tag">Raspberry Pi</span>
+            <span class="tag">Signals</span>
           </div>
           <div class="plinks">
-            <a href="#" target="_blank" rel="noopener">Code →</a>
+            <a href="https://github.com/UBC-Thunderbots/PCB_UI/tree/ui-v1.4" target="_blank" rel="noopener">Code →</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>Thunderbots — Power Board (v3.6)</h3>
+          <p>The robot's power board. I did a good amount of the layout and am currently improving the design — resolving overheating and reliability issues.</p>
+          <div class="tags">
+            <span class="tag">PCB Layout</span>
+            <span class="tag">Power</span>
+            <span class="tag">Thermal</span>
+          </div>
+          <div class="plinks">
+            <a href="https://github.com/UBC-Thunderbots/PCB_Power/tree/Power-v3.6" target="_blank" rel="noopener">Code →</a>
           </div>
         </article>
 
