@@ -84,6 +84,18 @@
     </section>
 
     <section>
+      <h2>Board &amp; schematic</h2>
+      <figure class="figure">
+        <img src="images/power-board-3d.png" alt="3D render of the power board in Altium: hexagonal board with two orange battery connectors at the top, the flyback transformer and inductors in the centre, output capacitors on the right, boot and reset buttons on the left, and high voltage warning markings on the lower corners" loading="lazy" />
+        <figcaption>3D render: battery connectors up top, regulators and the flyback stage in the centre, high-voltage kicker section marked along the lower edges.</figcaption>
+      </figure>
+      <figure class="figure">
+        <a href="images/power-board-flyback-schematic.png" target="_blank" rel="noopener"><img src="images/power-board-flyback-schematic.png" alt="Kicker charger schematic: an LT3750 capacitor charger controller drives a MOSFET and a 1:10 DA2034 flyback transformer from the 24 V rail, charging two 1000 µF 250 V capacitors on the isolated high-voltage side, with a 9 mΩ current sense resistor and a charge indicator LED" loading="lazy" /></a>
+        <figcaption>Kicker charger: LT3750 flyback controller with a 1:10 DA2034 transformer charging the 2 × 1000 µF HV capacitor bank; a 9 mΩ sense resistor limits primary current to 8.6 A.</figcaption>
+      </figure>
+    </section>
+
+    <section>
       <h2>What's on the board</h2>
       <ul>
         <li><b>Battery &amp; power levels</b>: takes the robot's battery and generates multiple regulated rails: 12 V and 5 V for power, plus a 3.3 V logic rail used by the IO board.</li>
