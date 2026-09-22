@@ -76,6 +76,15 @@ main.content ul li::marker { color: var(--accent); }
 .figure + .figure { margin-top: 16px; }
 .figure figcaption { color: #93a29d; font-size: 0.8rem; margin-top: 12px; text-align: center; font-family: var(--mono); }
 
+/* Embedded documents */
+.doc { margin: 6px 0 20px; border: 1px solid var(--line); border-radius: 10px; background: #0d1314; overflow: hidden; }
+.doc .doc-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+.doc .doc-head b { color: var(--prose); font-size: 0.95rem; }
+.doc .doc-head a { color: var(--accent); text-decoration: none; font-family: var(--mono); font-size: 0.8rem; margin-left: 14px; }
+.doc .doc-head a:hover { text-decoration: underline; }
+.doc iframe { display: block; width: 100%; height: 640px; border: 0; background: #fff; }
+@media (max-width: 640px) { .doc iframe { height: 480px; } }
+
 /* Link lists */
 .linklist { list-style: none; padding: 0; margin: 0; }
 .linklist li { margin-bottom: 7px; padding-left: 16px; position: relative; }
